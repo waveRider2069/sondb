@@ -9,7 +9,7 @@ from datetime import date, timedelta, datetime
 
 bp = Blueprint('subject', __name__, template_folder='../templates', url_prefix='/subject')
 # add some change
-
+# add second change
 @bp.route('/new')
 @login_required
 def new():
