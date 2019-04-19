@@ -2,7 +2,7 @@ from flask import (
     Blueprint, g, redirect, render_template, request, url_for
 )
 # from werkzeug.exceptions import abort
-
+# on consult1
 from .auth import login_required
 from .db import conn_db
 
