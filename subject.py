@@ -12,6 +12,7 @@ bp = Blueprint('subject', __name__, template_folder='../templates', url_prefix='
 # add second change
 # delete on subject
 # a = a+1
+# edit while reading the reviews
 @bp.route('/new')
 @login_required
 def new():
