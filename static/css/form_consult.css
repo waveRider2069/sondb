@@ -1,0 +1,129 @@
+/*keywords*/
+form#searchBox {
+    display: block;
+    margin-bottom: 20px;
+}
+
+#keywords {
+    border: 1.5px solid #ccc;
+    padding: 5px 10px;
+    width: 450px;
+    outline: none;
+    /*margin-top: 25px;*/
+}
+
+#keywords::-moz-selection {
+    border-color: #199ED8;
+}
+
+#keywords::selection {
+    border-color: #199ED8;
+}
+
+#keywords:invalid {
+    border-color: #f30;
+}
+
+
+/*Flex*/
+form.field .cond {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+form.field .part {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    margin: 10px 5% 18px 2%;
+}
+
+.tag {
+    margin-right: 20px;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.category,
+.thresholds,
+.tests {
+    flex-basis: 100%;
+}
+
+
+/*individual part adjustment*/
+/*loss level*/
+.content .degree {
+    display: flex;
+    flex-direction: column;
+}
+
+.degree .hint {
+    text-align: right;
+    line-height: 0.85em;
+    /*border: 1px solid red;*/
+}
+
+/*category*/
+.category .content {
+    margin-right: 3%;
+}
+
+/*thresholds*/
+.thresholds .content {
+    display: block;
+}
+
+.part .thresholds {
+    margin-top: 30px;
+}
+
+div.canvas {
+    padding-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+/*fieldset.canvas{
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}*/
+
+.content .switch_group {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+/*pages*/
+section.results div.pages{
+    margin-top: 40px;
+}
+
+/*switch labels*/
+input.switch+label {
+    padding: 3px 15px;
+    margin: -1px 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /*z-index: 100;*/
+}
+
+input.switch:checked+label {
+    border-color: #ccc;
+    border-top-color: #fff;
+}
+
+

@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+}
+
+.panel {
+    margin-left: 50px;
+    width: 500px;
+    height: 125px;
+    display: flex;
+    justify-content: center;
+    border: 1px #ccc solid;
+    padding: 0 15px 0 0;
+}
+
+.panel .freq {
+    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    /*border:1px solid #ccc;*/
+}
+
+.manipf {
+    height: 76%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.hintf {
+    margin-left: 40%;
+    text-align: center;
+    /*border:1px solid #ccc;*/
+}
+
+.number,
+.bar {
+    position: relative;
+    height: 80%;
+    width: 35%;
+    margin: 10% 8%;
+}
+
+.bar {
+    width: 10%;
+    border: 1px #ccc solid;
+}
+
+.prog {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #199ED8;
+    display: none;
+}
+
+
+.bar .upper,
+.bar .lower {
+    position: absolute;
+    width: 300%;
+    height: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px #ccc solid;
+}
+
+.number .upper,
+.number .lower {
+    width: 100%;
+    line-height: 1em;
+    height: 1em;
+    position: absolute;
+    text-align: center;
+    color: #949494;
+}
+
+.number .upper {
+    top: -2%;
+}
+
+.number .lower {
+    bottom: -2%;
+}
+
+.bar .upper {
+    top: -1px
+}
+
+.bar .lower {
+    bottom: -1px
+}

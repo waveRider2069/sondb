@@ -1,0 +1,47 @@
+<section class="subjectL" style="display: none;" data-results="{{ params['results'] }}"
+         data-pages="{{ params['pages'] }}" data-page="{{ params['page'] }}">
+    {% if params['results']>0 %}
+        <form class="sort">
+            <span class="tag">Sort in:</span>
+            <input type="radio" class="load single color_option" name="sort" value="1" id="sort_latest"
+                   {% if params['sort'] not in ['2','3','4'] %}checked{% endif %}>
+            <label for="sort_latest">latest</label>
+            <input type="radio" class="load single color_option" name="sort" value="2" id="sort_earliest"
+                   {% if params['sort'] == '2' %}checked{% endif %}>
+            <label for="sort_earliest">earliest</label>
+            <input type="radio" class="load single color_option" name="sort" value="3" id="sort_hl1"
+                   {% if params['sort'] == '3' %}checked{% endif %}>
+            <label for="sort_hl1">HL desc</label>
+            <input type="radio" class="load single color_option" name="sort" value="4" id="sort_hl2"
+                   {% if params['sort'] == '4' %}checked{% endif %}>
+            <label for="sort_hl2">HL asc</label>
+
+            <div class="stats results_amount" style="color: #199ED8">{{ params['results'] }}</div>
+            <span>results</span>
+            <div class="stats pages_number" style="color: #199ED8">{{ params['pages'] }}</div>
+            <span>pages</span>
+            <div class="stats"></div>
+            <span>current page</span>
+            <div class="stats page_index" style="color: #199ED8">{{ params['page'] }}</div>
+        </form>
+        {% from 'sub_box.html' import sub_box, pagination %}
+        <div class="subjectL">
+            {% for rec in reclist %}
+                {{ sub_box(rec,projs) }}
+            {% endfor %}
+        </div>
+        <div class="pages">
+            <div id="pagination">
+                {{ pagination(params['pages'],params['page']) }}
+            </div>
+        </div>
+    {% else %}
+        <div style="font-size: 17px;font-family: 'Arial', 'sans-serif';margin: 20px auto;width: 200px;text-align: center">
+            No matched record
+        </div>
+    {% endif %}
+</section>
+
+
+
+

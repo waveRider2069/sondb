@@ -1,0 +1,145 @@
+/**{
+	border:1px solid red;
+}*/
+/*section.subjectL{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}*/
+
+/*sort*/
+form.sort {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+form.sort .stats{
+    margin-left: 20px;
+    margin-right: 10px;
+}
+form.sort label {
+    margin-right: 15px;
+}
+
+div.sub_box {
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px 20px;
+    position: relative;
+    margin-bottom: 10px;
+}
+.sub_box .part{
+	margin:8px 0px;
+}
+.sub_box .part,
+.sub_box .group,
+.sub_box .widget.icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.sub_box .group {
+    margin-right: 15px;
+}
+
+.sub_box .part .elem {
+    margin-right: 10px
+}
+
+.sub_box .general .elem {
+    margin-right: 15px;
+}
+
+a.elem {
+    text-decoration: none;
+    color: #949494;
+}
+a.elem:hover {
+    /*text-decoration: none;*/
+    color: #199ED8;
+}
+.sub_box .widget {
+    position: absolute;
+}
+
+.widget.record_date {
+    right: 150px;
+    top: 10px;
+    border: 0;
+    background: transparent;
+    -webkit-appearance:none;
+       -moz-appearance:none;
+            appearance:none;
+
+}
+
+.widget.icon {
+    right: 40px;
+    bottom: 10px;
+}
+
+.icon .dismiss_proj_w {
+    background: url("../figures/mark_minus.png");
+
+}
+
+.icon .add_proj_w {
+    background: url("../figures/mark_add.png");
+
+}
+
+.icon .update_sub_w {
+    background: url("../figures/mark_update.png");
+
+}
+
+.icon .collect_sub_w {
+    background: url("../figures/mark_tolike.png");
+
+}
+
+.icon .collect_sub_w.liked {
+    background: url("../figures/mark_liked.png");
+
+}
+
+
+
+.icon .dismiss_proj_w,
+.icon .add_proj_w,
+.icon .update_sub_w,
+.icon .collect_sub_w {
+    margin-left: 10px;
+    width: 15px;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    cursor: pointer;
+
+}
+
+/*.part.addproj .content {
+    position: relative;
+}*/
+
+.sub_box select[name=addproj_w],
+.sub_box select[name=dismissproj_w] {
+    position: absolute;
+    bottom: 30px;
+    left: 80%;
+    z-index: 10;
+    display: none;
+}
+
+/*hide template*/
+/*#sub_list_temp {
+    display: none;
+}
+
+.sub_box{
+	display: none;
+}*/

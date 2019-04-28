@@ -1,0 +1,217 @@
+/**{
+    border: 1px solid red;
+}*/
+
+form.field .part,
+div#experimentForm.field .part {
+    margin: 10px 5% 18px 2%;
+}
+
+/*record date*/
+div#record_date {
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+/*Flex*/
+.cond {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+form#hearingForm .cond,
+div#experimentForm .cond {
+    flex-direction: column;
+}
+
+form#personalForm .part,
+div#experimentForm .part,
+.speech {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+form#personalForm .content,
+div#experimentForm .content,
+.speech .content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+
+.tag {
+    margin-right: 20px;
+}
+
+.part.proj .tag {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*margin-left: 20px;*/
+}
+
+.part.proj .state,
+.part.proj .pay,
+.part.proj .del_proj {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
+
+.part.proj .dismiss_proj {
+    width: 15px;
+    height: 15px;
+    background: url("../figures/mark_minus.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.part .add_proj {
+    width: 15px;
+    height: 15px;
+    background: url("../figures/mark_add.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.part.addproj .content {
+    position: relative;
+}
+
+.part.addproj select[name=addproj] {
+    position: absolute;
+    top: -5px;
+    display: none;
+}
+
+#add_proj_templet {
+    display: none;
+}
+
+/*individual flex-basis*/
+.part.diseases,
+.part.comments,
+.part.speech {
+    flex-grow: 1;
+}
+
+input[name='sparenote'] {
+    width: 200px;;
+}
+
+/*thresholds*/
+.thresh_in,
+.thresh_plot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.canvas {
+    width: 80%;
+    height: 220px;
+    padding-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.canvas canvas.right,
+.canvas canvas.left {
+    width: 46%;
+    height: 90%;
+    margin-top: 5px;
+
+    background-color: #ccc;
+    /*border: 1px solid red;*/
+}
+
+.canvas canvas.left {
+    background-color: #199ED8;
+}
+
+.switch_group {
+    display: flex;
+    justify-content: center;
+}
+
+
+/*category*/
+.category .content,
+.immitance .content {
+    /*margin-top: 10px;*/
+    /*    display: flex;
+    justify-content: center;*/
+    margin-left: 10%;
+}
+
+table {
+    text-align: center;
+}
+
+table tr,
+table td {
+    padding: 5px 15px;
+}
+
+td div {
+    display: flex;
+}
+
+/*text*/
+input[name=subname],
+input[name=phone] {
+    width: 140px;
+}
+
+select[name=addproj] {
+    width: 150px;
+}
+
+input[type=number].pay {
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+input[name=timenote] {
+    margin-left: 10px;
+    width: 400px;
+}
+
+textarea[name=diseases] {
+    width: 500px;
+    height: 4em;
+}
+
+textarea[name=comments] {
+    width: 75%;
+    height: 10em;
+    margin-left: 10%;
+}
+
+
+/*switch labels*/
+input.switch + label {
+    /*    padding-left: 15px;
+    padding-right: 15px;*/
+    padding: 3px 15px;
+    margin: -1px 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    /*z-index: 100;*/
+}
+
+input.switch:checked + label {
+    border-color: #ccc;
+    border-top-color: #fff;
+}

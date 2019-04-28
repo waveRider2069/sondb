@@ -1,0 +1,88 @@
+/* fold up*/
+/*arrow-down*/
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 10px solid #ccc;
+    transform: rotateX(0deg) translateY(50%);
+    transition: transform 0.5s
+}
+
+.unfold.anchor .arrow-down {
+    transform: rotateX(180deg) translateY(-50%);
+    transition: transform 0.5s
+}
+
+/*separating line*/
+hr {
+    height: 1px;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+/*unfold line*/
+div.unfold {
+    display: flex;
+    justify-content: flex-start;
+    width: 90%;
+    cursor: pointer;
+}
+
+div.unfold hr.indi_view,
+.arrow-down.indi_view {
+    visibility: hidden;
+}
+
+div.unfold hr {
+    flex-grow: 2;
+}
+
+
+form.field {
+    display: none;
+}
+
+
+/*radio and checkbox*/
+input.color_option,
+input.switch {
+    display: none;
+}
+
+input.color_option+label {
+    border: 1px solid #ccc;
+    padding: 2px 8px;
+}
+
+input.color_option:hover+label {
+    border: 1px solid #199ED8;
+}
+
+input.color_option:checked+label {
+    border: 1px solid #199ED8;
+    background-color: #199ED8;
+    color: #fff;
+}
+
+
+
+/*type in*/
+.type_in,
+select.select_list,
+input.select_list {
+    padding: 5px 10px;
+}
+
+/*-user-select*/
+.hint,
+input.color_option+label,
+input.switch+label {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

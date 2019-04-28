@@ -1,0 +1,57 @@
+* {
+    font-size: 15px;
+    font-family: "Arial", "Microsoft Yahei", "黑体", "宋体", "sans-serif";
+}
+div.menu .title{
+    text-decoration: none;
+        font-size:18px;
+    font-weight: bold;
+    color: #fff
+}
+nav .navhead {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+nav .navpath {
+    font-size: 18px;
+    font-weight: bolder;
+    /*font-style: italic;*/
+}
+
+
+div.unfold {
+    font-size: 17px;
+    font-weight: bolder;
+
+}
+
+.part .tag,
+.item .tag {
+    font-size: 16px;
+    /*color:#199ED8;*/
+}
+
+.sort .tag,
+input+label,
+textarea {
+    font-size: 15px;
+}
+
+.hint {
+    font-size: 13px;
+    color: #949494;
+}
+
+input[type=text] {
+    font-size: 15px;
+}
+
+input[type=reset] {
+    font-size: 14px;
+}
+
+input[type=button] {
+    font-size: 15px;
+    font-weight: bolder;
+}

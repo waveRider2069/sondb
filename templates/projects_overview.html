@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>overview projects SSDB</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/form.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/form_projects_view.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/form_table.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/button.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/header_footer.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/typography.css') }}">
+    <link rel="icon" href="{{ url_for('static',filename='figures/logo.png') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}" type="text/javascript"></script>
+</head>
+
+<body>
+<header class="navigation">
+    <nav class="main_menu">
+        <a href="{{ url_for('consult.ready') }}" class="toConsult navhead">Consult</a>
+        <a href="#" class="toCollection navhead">Collection</a>
+        <a href="{{ url_for('subject.new') }}" class="toSubject navhead">Subject</a>
+        <a href="{{ url_for('projects.overview') }}" class="toProject curModule navhead">Projects</a>
+    </nav>
+    <nav class="dir_path">
+        <a class="navpath">Projects</a>
+        <span>/</span>
+        <a href="{{ url_for('projects.overview') }}" class="curPath navpath">View</a>
+    </nav>
+</header>
+<section>
+    <!-- <form class="one_whole"> -->
+    <div class="pick_state">
+        <form class="pick_state">
+            <input type="radio" class="state single color_option" name="state" value="all" id="all"
+                   {% if pstate=='all' %}checked{% endif %}>
+            <label for="all">All</label>
+            <input type="radio" class="state single color_option" name="state" value="in progress" id="in_progress" {% if pstate=='in progress' %}checked{% endif %}>
+            <label for="in_progress">In progress</label>
+            <input type="radio" class="state single color_option" name="state" value="delayed" id="delayed" {% if pstate=='delayed' %}checked{% endif %}>
+            <label for="delayed">Delayed</label>
+            <input type="radio" class="state single color_option" name="state" value="finished" id="finished" {% if pstate=='finished' %}checked{% endif %}>
+            <label for="finished">Finished</label>
+            <input type="radio" class="state single color_option" name="state" value="suspended" id="suspended" {% if pstate=='suspended' %}checked{% endif %}>
+            <label for="suspended">Suspended</label>
+            <input type="radio" class="state single color_option" name="state" value="canceled" id="canceled" {% if pstate=='canceled' %}checked{% endif %}>
+            <label for="canceled">Canceled</label>
+        </form>
+    </div>
+    <div class="new">
+        <a class="new_proj" title="New project" href="{{ url_for('projects.new') }}" target="_blank"></a>
+        <a class="hint" title="New project" href="{{ url_for('projects.new') }}" target="_blank">New</a>
+    </div>
+    <!-- </form> -->
+</section>
+<section class="proj_table">
+    <!-- <div class="table1"> -->
+    {% if params_list %}
+        <table class="proj_table" border="0">
+            <thead>
+            <tr>
+                <th class="title">Title</th>
+                <th class="leader">Leader</th>
+                <th class="start">Start</th>
+                <th class="dueto_end">To end by</th>
+                <th class="state">State</th>
+                <th class="subjectN">Subjects</th>
+                <th class="finance">Finance</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for params in params_list %}
+                <tr class="added">
+                    <td class="title"><a
+                            href="{{ url_for('projects.view_single',idp=params['idp'],page_state=pstate) }}"
+                            class="elem_linkage">{{ params['abbr'] }}</a></td>
+                    <td class="leader">{{ params['leader'] }}</td>
+                    <td class="start">{{ params['start'] }}</td>
+                    <td class="dueto_end">{{ params['endt'] }}</td>
+                    {% if 'in progress' ==  params['pstate']|lower or 'in_progress' ==  params['pstate']|lower %}
+                        {% set statecolor = 'blue' %}
+                    {% elif 'delayed' ==  params['pstate']|lower %}
+                        {% set statecolor = 'red' %}
+                    {% else %}
+                        {% set statecolor = 'yellow' %}
+                    {% endif %}
+                    <td class="state"><span class="{{ statecolor }}">{{ params['pstate'] }}</span></td>
+                    <td class="subjectN"><span class="subjectN1">None</span> / <span
+                            class="subjectN2">{{ params['subjectn'] }}</span></td>
+                    <td class="finance"><span class="finance1">None</span> / <span
+                            class="finance2">{{ params['budget'] }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <!-- </div> -->
+    {#    <table class="proj_table_temp">#}
+    {#        <tbody>#}
+    {#        <tr class="added" style="display: none;">#}
+    {#            <td class="title"><a href="projects_view.html" class="elem_linkage" target="_blank"></a></td>#}
+    {#            <td class="leader"></td>#}
+    {#            <td class="start"></td>#}
+    {#            <td class="dueto_end"></td>#}
+    {#            <td class="state"><span class="state1"></span></td>#}
+    {#            <td class="subjectN"><span class="subjectN1"></span> / <span class="subjectN2"></span></td>#}
+    {#            <td class="finance"><span class="finance1"></span> / <span class="finance2"></span></td>#}
+    {#        </tr>#}
+    {#        </tbody>#}
+    {#    </table>#}
+</section>
+<script src="{{ url_for('static',filename='js/ajax_table.js') }}" type="text/javascript"></script>
+</body>
+
+</html>

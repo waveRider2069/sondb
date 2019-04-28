@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>new subject SSDB</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/form.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/form_subject.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/slide_bar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/button.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/header_footer.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/typography.css') }}">
+    <link rel="icon" href="{{ url_for('static',filename='figures/logo.png') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}" type="text/javascript"></script>
+</head>
+
+<body>
+<header class="navigation">
+    <nav class="main_menu">
+        <a href="{{ url_for('consult.ready') }}" class="toConsult navhead">Consult</a>
+        <a href="#" class="toCollection navhead">Collection</a>
+        <a href="{{ url_for('subject.new') }}" class="toSubject curModule navhead">Subject</a>
+        <a href="{{ url_for('projects.overview') }}" class="toProject navhead">Projects</a>
+    </nav>
+    <nav class="dir_path">
+        <a lass="navpath">Subject</a>
+        <span>/</span>
+        <a class="curPath navpath">New</a>
+    </nav>
+</header>
+<section class="conditions">
+    <div name="personalForm" class="unfold line">
+        <div>Personal Information</div>
+        <hr>
+        <div class="arrow-down"></div>
+    </div>
+    <form id="personalForm" class="field tosubmit unfolded">
+        <div class="cond">
+            <div class="part subname">
+                <div class="tag">Name</div>
+                <div class="content">
+                    <input type="text" class="type_in" name="subname" required>
+                </div>
+            </div>
+            <div class="part project">
+                <div class="tag">Project to join</div>
+                <div class="content">
+                    <select name="proj_join" class="select_list">
+                        <option value="unknown">--select--</option>
+                        {% for proj in projs %}
+                            <option value="{{ proj['idp'] }}">{{ proj['abbr'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="part phone">
+                <div class="tag">Phone</div>
+                <div class="content">
+                    <input type="text" name="phone" class="type_in">
+                </div>
+            </div>
+            <div class="part gender">
+                <div class="tag">Gender</div>
+                <div class="content">
+                    <input type="checkbox" class="single color_option" name="gender" value="male" id="male">
+                    <label for="male">male</label>
+                    <input type="checkbox" class="single color_option" name="gender" value="female" id="female">
+                    <label for="female">female</label>
+                </div>
+            </div>
+            <div class="part age">
+                <div class="tag">Age</div>
+                <div class="content">
+                    <div class="range oneh horizontal">
+                        <input name="age" type="range" min="0" max="100" step="1" value="0">
+                        <div class="slide_prog"></div>
+                        <div class="slide_handle"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="part attitude">
+                <div class="tag">Attitude</div>
+                <div class="content">
+                    <input type="checkbox" class="single color_option" name="attitude" value="active" id="active">
+                    <label for="active">active</label>
+                    <input type="checkbox" class="single color_option" name="attitude" value="medium"
+                           id="attitude_medium">
+                    <label for="attitude_medium">medium</label>
+                    <input type="checkbox" class="single color_option" name="attitude" value="negative" id="negative">
+                    <label for="negative">negative</label>
+                </div>
+            </div>
+            <div class="part location">
+                <div class="tag">Residence</div>
+                <div class="content">
+                    <input type="checkbox" class="single color_option" name="location" value="shanghai nearby"
+                           id="shanghai_near">
+                    <label for="shanghai_near">Shanghai nearby</label>
+                    <input type="checkbox" class="single color_option" name="location" value="shanghai far"
+                           id="shanghai_far">
+                    <label for="shanghai_far">Shanghai faraway</label>
+                    <input type="checkbox" class="single color_option" name="location" value="not in shanghai"
+                           id="shanghai_not">
+                    <label for="shanghai_not">not in Shanghai</label>
+                </div>
+            </div>
+            <div class="part time">
+                <div class="tag">Available time</div>
+                <div class="content">
+                    <input type="checkbox" class="single color_option" name="spare" value="workdays" id="workdays">
+                    <label for="workdays">workdays</label>
+                    <input type="checkbox" class="single color_option" name="spare" value="weekends" id="weekends">
+                    <label for="weekends">weekends</label>
+                    <input type="checkbox" class="single color_option" name="spare" value="anytime" id="spa_both">
+                    <label for="spa_both">anytime</label>
+                    <input type="text" class="type_in" name="sparenote" maxlength="60"
+                           placeholder="--add notes about time--">
+                </div>
+            </div>
+            <div class="part aidwearing">
+                <div class="tag">Hearing aid wearing</div>
+                <div class="content">
+                    <input type="checkbox" class="single color_option" name="aidwearing" value="not wearing" id="none">
+                    <label for="none">none</label>
+                    <input type="checkbox" class="single color_option" name="aidwearing" value="unilateral"
+                           id="unilateral">
+                    <label for="unilateral">unilateral</label>
+                    <input type="checkbox" class="single color_option" name="aidwearing" value="bilateral"
+                           id="bilateral">
+                    <label for="bilateral">bilateral</label>
+                </div>
+            </div>
+            <div class="part diseases">
+                <div class="tag">Hearing related diseases</div>
+                <div class="content">
+                    <textarea name="diseases" class="type_in" placeholder="--describe disease history--"
+                              maxlength="120"></textarea>
+                </div>
+            </div>
+        </div>
+        <input type="reset" name="personalReset" value="reset" form="personalForm">
+    </form>
+    <div name="hearingForm" class="unfold line">
+        <div>Hearing condition</div>
+        <hr>
+        <div class="arrow-down"></div>
+    </div>
+    <form id="hearingForm" class="field tosubmit">
+        <div class="cond">
+            <div class="part thresholds">
+                <div class="tag">Pure tone thresholds</div>
+                <div class="content">
+                    <div class="thresh_in">
+                        <div class="canvas conduction">
+                            <div class="air panel thresh">
+                                <div class="group right"><span class="hint">right</span>
+                                    <div class="slides">
+                                        <div class="range oneh vertical">
+                                            <input name="air_250r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_500r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_1000r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_2000r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_4000r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_8000r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                    </div>
+                                    <div class="hint">
+                                        <div>250</div>
+                                        <div>500</div>
+                                        <div>1000</div>
+                                        <div>2000</div>
+                                        <div>4000</div>
+                                        <div>8000</div>
+                                    </div>
+                                </div>
+                                <div class="group left"><span class="hint">left</span>
+                                    <div class="slides">
+                                        <div class="range oneh vertical">
+                                            <input name="air_250l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_500l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_1000l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_2000l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_4000l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="air_8000l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                    </div>
+                                    <div class="hint">
+                                        <div>250</div>
+                                        <div>500</div>
+                                        <div>1000</div>
+                                        <div>2000</div>
+                                        <div>4000</div>
+                                        <div>8000</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bone panel thresh">
+                                <div class="group right"><span class="hint">right</span>
+                                    <div class="slides">
+                                        <div class="range oneh vertical">
+                                            <input name="bone_250r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_500r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_1000r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_2000r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_4000r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_8000r" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                    </div>
+                                    <div class="hint">
+                                        <div>250</div>
+                                        <div>500</div>
+                                        <div>1000</div>
+                                        <div>2000</div>
+                                        <div>4000</div>
+                                        <div>8000</div>
+                                    </div>
+                                </div>
+                                <div class="group left"><span class="hint">left</span>
+                                    <div class="slides">
+                                        <div class="range oneh vertical">
+                                            <input name="bone_250l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_500l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_1000l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_2000l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_4000l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                        <div class="range oneh vertical">
+                                            <input name="bone_8000l" type="range" min="-20" max="120" step="5"
+                                                   value="-20">
+                                            <div class="slide_prog"></div>
+                                            <div class="slide_handle"></div>
+                                        </div>
+                                    </div>
+                                    <div class="hint">
+                                        <div>250</div>
+                                        <div>500</div>
+                                        <div>1000</div>
+                                        <div>2000</div>
+                                        <div>4000</div>
+                                        <div>8000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="switch_group">
+                            <input class="switch" type="radio" value='air' name="conduction" id="air" checked>
+                            <label class="switch" for="air">air conduction</label>
+                            <input class="switch" type="radio" value='bone' name="conduction" id="bone">
+                            <label class="switch" for="bone">bone conduction</label>
+                        </div>
+                    </div>
+{#                    <div class="go">#}
+{#                        <input class="go" type="button" onclick="" value="Plot audiogram">#}
+{#                    </div>#}
+{#                    <div class="thresh_plot">#}
+{#                        <div class="canvas history">#}
+{#                            <canvas id="ctx_right" class="d2018-12-21 right">#}
+{#                            </canvas>#}
+{#                            <canvas id="ctx_left" class="d2018-12-21 left">#}
+{#                            </canvas>#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+            </div>
+            <div class="part category">
+                <div class="tag">Hearing loss category</div>
+                <div class="content">
+                    <table border="0">
+                        <tr>
+                            <td></td>
+                            <td class="hint">Right</td>
+                            <td class="hint">Left</td>
+                        </tr>
+                        <tr>
+                            <td class="hint">Cause</td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" class="single color_option" name="cause_right"
+                                           value="sensorineural" id="sensorineural_right">
+                                    <label for="sensorineural_right">sensorineural</label>
+                                    <input type="checkbox" class="single color_option" name="cause_right"
+                                           value="conductive" id="conductive_right">
+                                    <label for="conductive_right">conductive</label>
+                                    <input type="checkbox" class="single color_option" name="cause_right"
+                                           value="mixed" id="mixed_right">
+                                    <label for="mixed_right">mixed</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" class="single color_option" name="cause_left"
+                                           value="sensorineural" id="sensorineural_left">
+                                    <label for="sensorineural_left">sensorineural</label>
+                                    <input type="checkbox" class="single color_option" name="cause_left"
+                                           value="conductive" id="conductive_left">
+                                    <label for="conductive_left">conductive</label>
+                                    <input type="checkbox" class="single color_option" name="cause_left"
+                                           value="mixed" id="mixed_left">
+                                    <label for="mixed_left">mixed</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="hint">Shape</td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" class="single color_option" name="shape_right" value="flat"
+                                           id="flat_right">
+                                    <label for="flat_right">flat</label>
+                                    <input type="checkbox" class="single color_option" name="shape_right"
+                                           value="sloping" id="sloping_right">
+                                    <label for="sloping_right">sloping</label>
+                                    <input type="checkbox" class="single color_option" name="shape_right" value="others"
+                                           id="other_shape_right">
+                                    <label for="other_shape_right">others</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" class="single color_option" name="shape_left" value="flat"
+                                           id="flat_left">
+                                    <label for="flat_left">flat</label>
+                                    <input type="checkbox" class="single color_option" name="shape_left" value="sloping"
+                                           id="sloping_left">
+                                    <label for="sloping_left">sloping</label>
+                                    <input type="checkbox" class="single color_option" name="shape_left" value="others"
+                                           id="other_shape_left">
+                                    <label for="other_shape_left">others</label></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="part immitance">
+                <div class="tag">Acoustic immitance type</div>
+                <div class="content">
+                    <table border="0">
+                        <tr>
+                            <td></td>
+                            <td class="hint">Right</td>
+                            <td class="hint">Left</td>
+                        </tr>
+                        <tr>
+                            <td class="hint">Types</td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" class="single color_option" name="immittance_right" value="A"
+                                           id="A_right">
+                                    <label for="A_right">A</label>
+                                    <input type="checkbox" class="single color_option" name="immittance_right"
+                                           value="As"
+                                           id="As_right">
+                                    <label for="As_right">As</label>
+                                    <input type="checkbox" class="single color_option" name="immittance_right"
+                                           value="Ad"
+                                           id="Ad_right">
+                                    <label for="Ad_right">Ad</label>
+                                    <input type="checkbox" class="single color_option" name="immittance_right" value="B"
+                                           id="B_right">
+                                    <label for="B_right">B</label>
+                                    <input type="checkbox" class="single color_option" name="immittance_right" value="C"
+                                           id="C_right">
+                                    <label for="C_right">C</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input type="checkbox" class="single color_option" name="immittance_left" value="A"
+                                           id="A_left">
+                                    <label for="A_left">A</label>
+                                    <input type="checkbox" class="single color_option" name="immittance_left" value="As"
+                                           id="As_left">
+                                    <label for="As_left">As</label>
+                                    <input type="checkbox" class="single color_option" name="immittance_left" value="Ad"
+                                           id="Ad_left">
+                                    <label for="Ad_left">Ad</label>
+                                    <input type="checkbox" class="single color_option" name="immittance_left" value="B"
+                                           id="B_left">
+                                    <label for="B_left">B</label>
+                                    <input type="checkbox" class="single color_option" name="immittance_left" value="C"
+                                           id="C_left">
+                                    <label for="C_left">C</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="part speech">
+                <div class="tag">Speech recognition</div>
+                <div class="content">
+                    <input type="checkbox" class="single color_option" name="speech" value="superior" id="superior">
+                    <label for="superior">superior</label>
+                    <input type="checkbox" class="single color_option" name="speech" value="average" id="average">
+                    <label for="average">average</label>
+                    <input type="checkbox" class="single color_option" name="speech" value="inferior" id="inferior">
+                    <label for="inferior">inferior</label>
+                </div>
+            </div>
+        </div>
+        <input type="reset" name="hearingReset" value="reset" form="hearingForm">
+    </form>
+    <div name="experimentForm" class="unfold line">
+        <div>Experimental information</div>
+        <hr>
+        <div class="arrow-down"></div>
+    </div>
+    <form id="experimentForm" class="field tosubmit">
+        <div class="cond">
+            <div class="part tests">
+                <div class="tag">Tests done</div>
+                <div class="content">
+                    <input type="checkbox" class="multiple color_option" name="tests" value="mhint-24" id="mhint24">
+                    <label for="mhint24">MHINT-24</label>
+                    <input type="checkbox" class="multiple color_option" name="tests" value="mhint-12" id="mhint12">
+                    <label for="mhint12">MHINT-12</label>
+                    <input type="checkbox" class="multiple color_option" name="tests" value="cnsm" id="cnsm">
+                    <label for="cnsm">CNSM</label>
+                    <input type="checkbox" class="multiple color_option" name="tests" value="mstm" id="mstm">
+                    <label for="mstm">MSTM</label>
+                    <input type="checkbox" class="multiple color_option" name="tests" value="ppt" id="ppt">
+                    <label for="ppt">PPT</label>
+                    <input type="checkbox" class="multiple color_option" name="tests" value="others" id="others">
+                    <label for="others">others</label>
+                </div>
+            </div>
+        </div>
+        <input type="reset" name="experimentReset" value="reset" form="experimentForm">
+    </form>
+    <div name="commentsForm" class="unfold line">
+        <div>Adding comments</div>
+        <hr>
+        <div class="arrow-down"></div>
+    </div>
+    <form id="commentsForm" class="field tosubmit">
+        <div class="cond">
+            <div class="part comments">
+                <div class="content">
+                    <textarea name="comments" class="type_in" maxlength="250"
+                              placeholder="--Note down any other information you think important in here--"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="go line">
+        <hr>
+        <input class="go" name="new_subject" type="button" value="Save">
+        <hr>
+    </div>
+</section>
+<footer>----------footer-----------</footer>
+<!-- <script src="js/jquery-ui.min.slider.js" type="text/javascript"></script> -->
+<script src="{{ url_for('static',filename='js/slide_bar.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static',filename='js/effect.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static',filename='js/effect-canvas.js') }}" type="text/javascript"></script>
+
+<script src="{{ url_for('static',filename='js/audiogram_canvas.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static',filename='js/effect-subject.js') }}" type="text/javascript"></script>
+
+</body>
+</body>
+
+</html>

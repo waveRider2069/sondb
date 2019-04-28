@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>index SSDB</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/typography.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/login.css') }}">
+    <link rel="icon" href="{{ url_for('static',filename='figures/logo.png') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="panel">
+    <div class="information">
+        <div class="welcome">Sonova China R&D Database</div>
+        <form action="{{ url_for('auth.logout') }}" method="post" name="logout">
+            <input class="submit1" type="submit" name="submit" value="Log out">
+        </form>
+    </div>
+    <div class="menu">
+        <a class="consult success" target="_blank" href="{{ url_for('consult.ready') }}">
+            <img src="{{ url_for('static',filename='figures/login/icon_consult.png',alt='Icon') }}">
+            <div class="title a">Consult</div>
+        </a>
+        <a class="collection success" target="_blank">
+            <img src="{{ url_for('static',filename='figures/login/icon_collection.png',alt='Icon') }}">
+            <div class="title b">Collection</div>
+        </a>
+        <a class="subject success" target="_blank" href="{{ url_for('subject.new') }}">
+            <img src="{{ url_for('static',filename='figures/login/icon_subject.png',alt='Icon') }}">
+            <div class="title c">Subject</div>
+        </a>
+        <a class="projects success" target="_blank" href="{{ url_for('projects.overview') }}">
+            <img src="{{ url_for('static',filename='figures/login/icon_projects.png',alt='Icon') }}">
+            <div class="title d">Projects</div>
+        </a>
+
+    </div>
+
+</div>
+<script src="{{ url_for('static',filename='js/login_effect.js') }}" type="text/javascript"></script>
+</body>
+
+</html>
+<!-- 
+ href="html/consult_1.html"
+  href="html/subject_new.html"
+   href="html/projects_overview.html" -->

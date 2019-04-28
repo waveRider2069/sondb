@@ -1,0 +1,38 @@
+nav.main_menu {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 60%;
+    margin-left: 40%;
+    color: #ccc;
+}
+
+nav.dir_path {
+    display: flex;
+    justify-content: flex-start;
+    height: 40%;
+    align-items: flex-end;
+    color: #bbb;
+}
+
+nav .navhead {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #ccc;
+
+    /*font: bold 23px "Arial", "Microsoft Yahei", "黑体","宋体","sans-serif"*/
+}
+
+nav .navpath {
+    margin-right: 4px;
+    margin-left: 4px;
+    text-decoration: none;
+    color: #bbb;
+
+    /*font: italic bolder 18px "Arial", "Microsoft Yahei", "黑体","宋体","sans-serif"*/
+}
+
+nav .curPath,
+nav .curModule {
+    color: #199ED8;
+}

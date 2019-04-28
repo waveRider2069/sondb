@@ -1,0 +1,125 @@
+/**{
+    border: 1px solid red;
+}*/
+/*individual project*/
+div.item {
+    display: flex;
+    align-items: center;
+    margin: 20px 3%;
+}
+
+div.start_time {
+    float: left;
+}
+
+div.state {
+    float: left;
+}
+
+div.time_box {
+    clear: both;
+    margin-top: -25px;
+    /**zoom:1;*/
+}
+
+div.dueto_end {
+    clear: both;
+}
+
+div.tag {
+    width: 210px;
+    text-align: right;
+    margin-right: 20px;
+}
+
+/*hint*/
+div.hint {
+    margin-left: 10px
+}
+
+/*title*/
+/*div.title {
+    font-weight: bolder;
+}*/
+a.update_proj {
+    margin-left: 20px;
+    width: 18px;
+    height: 18px;
+    background: url(../figures/mark_update.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+a.del_proj {
+    margin-left: 10px;
+    width: 15px;
+    height: 15px;
+    background: url("../figures/mark_trash.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+/*state*/
+div.state .content {
+    color: #199ED8;
+    font-style: italic;
+}
+
+/*description*/
+div.description .tag {
+    align-self: flex-start;
+}
+
+div.description .content {
+    width: 55%;
+    height: 70px;
+    overflow-y: auto;
+}
+
+/*Overview*/
+div.new,
+form.pick_state {
+    display: flex;
+    align-items: center;
+    margin: 20px 3%;
+}
+
+div.new {
+    justify-content: flex-start;
+    /*margin-left: 10%;*/
+}
+
+a.new_proj {
+    margin-left: 20px;
+    margin-right: 5px;
+    width: 15px;
+    height: 15px;
+    background: url("../figures/mark_add.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+a.hint, a {
+    text-decoration: none;
+    color: #000;
+}
+
+/*radioes*/
+input.color_option.state + label {
+    border: 1px solid #ccc;
+    padding: 5px 0px;
+    text-align: center;
+    width: 100px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+
+
+

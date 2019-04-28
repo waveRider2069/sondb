@@ -1,0 +1,55 @@
+/**{border: 1px solid red}*/
+/*projL table*/
+table {
+    text-align: center;
+    margin-left: -50px;
+}
+
+table tr,
+table td {
+    padding: 10px 12px;
+    /*border: 1px solid;*/
+}
+
+th.title {
+    width: 20%;
+}
+
+th.leader {
+    width: 10%;
+}
+
+th.start,
+th.dueto_end,
+th.state {
+    width: 15%;
+}
+
+th.subjectn {
+    width: 8%;
+}
+
+td.title a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #000;
+}
+
+table.proj_table_temp {
+    display: none;
+}
+
+
+td .blue {
+    color: #199ED8;
+}
+
+td .red,
+td.red {
+    color: #f00;
+}
+
+td .yellow,
+td.yellow {
+    color: #f90;
+}

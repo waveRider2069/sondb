@@ -1,0 +1,79 @@
+/**{
+    border: 1px solid red;
+}*/
+div.item {
+    display: flex;
+    align-items: center;
+    margin: 20px 3%;
+}
+
+div.start_time {
+    float: left;
+}
+
+div.dueto_end {
+    float: left;
+}
+
+div.time_box {
+    clear: both;
+    margin-top: -15px;
+    /**zoom:1;*/
+}
+
+div.budget {
+    clear: both;
+}
+
+div.tag {
+    width: 150px;
+    text-align: right;
+}
+
+div.space {
+    width: 12px;
+    height: 12px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+div.mark {
+    background: url(../figures/mark_required.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+/*description*/
+div.description .tag{
+    align-self: flex-start;
+}
+/*radioes*/
+/*radio and checkbox*/
+input.color_option.state+label {
+    border: 1px solid #ccc;
+    padding: 5px 0px;
+    text-align: center;
+    width: 120px;
+    cursor: pointer;
+}
+
+
+/*text*/
+textarea[name=description] {
+    /*flex: 1 1 auto;*/
+    width: 550px;
+    height: 10em;
+}
+
+input[name=title] {
+    width: 400px;
+}
+
+input[name=abbreviation] {
+    width: 200px;
+}
+
+/*hint*/
+div.hint {
+    margin-left: 10px
+}

@@ -1,0 +1,53 @@
+/*body{background: #ecf0f1;}*/
+/*set margins*/
+/*body{
+    margin-top: 40px;
+}*/
+header {
+    height: 100px;
+    margin: 50px auto 40px auto;
+    /*width: 70%;*/
+    width: 1000px;
+    /*width: 1000px;*/
+
+}
+
+footer {
+    margin: 200px 500px;
+    /*width: 70%;*/
+        width: 1000px;
+
+
+}
+
+section {
+    margin: 15px auto 30px auto;
+    /*width: 70%;*/
+        width: 1000px;
+
+    /*    width: 1000px;
+*/
+}
+
+form.field,
+form.one_whole {
+    margin: 0px auto 30px auto;
+}
+
+div.line {
+    margin-bottom: 10px;
+}
+
+div.go {
+    margin-top: 40px;
+}
+
+form.sort {
+    margin-bottom: 20px;
+}
+
+
+/*form.one_whole{
+    margin: 30px auto;
+}
+*/

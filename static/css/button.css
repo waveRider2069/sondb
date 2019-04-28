@@ -1,0 +1,80 @@
+
+
+/*go button*/
+
+div.go {
+    display: flex;
+    justify-content: center;
+}
+
+div.go hr {
+    width: 20%;
+    border-color: #199ED8;
+}
+
+/*input.go {
+    margin-left: 15px;
+    margin-right: 15px;
+
+}*/
+
+input.go {
+    background-color: #fff;
+    border: 2px solid #199ED8;
+    padding: 1px 10px;
+    border-radius: 10px;
+    color: #199ED8;
+    outline: none;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+input.go:disabled {
+    border-width: 1px;
+    color: #ccc;
+    cursor: default;
+}
+
+
+input.go:active {
+    background-color: #199ED8;
+    color: #fff;
+}
+
+input[type=reset] {
+    margin-left: 47%;
+}
+
+/*reset button*/
+input[type=reset] {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    padding: 1px 10px;
+    border-radius: 10px;
+    color: #949494;
+    outline: none;
+    transition: transform 0.4s;
+    cursor: pointer;
+}
+
+input[type=reset]:active {
+    background-color: #ccc;
+    color: #fff;
+}
+
+
+input[type=reset]:enabled:hover,
+input.go:enabled:hover {
+    transform: scale(1.1);
+
+}
+
+/*elem_linkage*/
+a.elem_linkage{
+    text-decoration: none;
+    color: #000;
+}
+
+a.elem_linkage:hover{
+    color: #199ED8;
+}

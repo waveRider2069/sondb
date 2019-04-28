@@ -1,0 +1,77 @@
+{% macro audiogram(record,ear,width,height) %}
+    <svg overflow="visible">
+        {% set var = namespace(startl=-10,startp=5, star=6,arrow=8,circ = 5) %}
+        {% if ear==1 %}
+            {% set var.title = 'Left' %}
+            {% set var.sx = 'l' %}
+            {% set var.color = '#06c' %}
+        {% else %}
+            {% set var.title = 'Right' %}
+            {% set var.sx = 'r' %}
+            {% set var.color = '#c33' %}
+        {% endif %}
+        {% for le in range(14) %}
+            <text x="5%" y="{{ (var.startp + le*7) | string + '%' }}"
+                  text-anchor="end" fill="#949494" style="font-size: 13px">{{ (var.startl + le*10) | int }}</text>
+            <line x1="8%" y1="{{ (var.startp - 2 + le*7) | string ~ '%' }}" x2="100%"
+                  y2="{{ (var.startp - 2 + le*7) | string ~ '%' }}"
+                  stroke="#ccc" stroke-width="1"></line>
+        {% endfor %}
+        <text x="55%" y="0%" text-anchor="middle" fill="{{ var.color }}" style="font-size: 16px">{{ var.title | upper }}</text>
+        {% for freq in [0.125,0.25,0.5,1,2,4,8] %}
+            <text y="100%" x="{{ (10 + 14*(freq/0.125)| log2) | string ~ '%' }}" text-anchor="middle">{{ freq }}</text>
+        {% endfor %}
+        {% set var.points='' %}
+        {% for freq in ['125','250','500','1000','2000','3000','4000','6000','8000'] %}
+            {% set var.curfreq = 'air_'~freq~var.sx %}
+            {% if var.curfreq in record and record[var.curfreq] is not none %}
+                {% set var.x=((10 + 14*((freq|int)/125)| log2) /100*width)| int %}
+                {% set var.y=((var.startp - 2 + (record[var.curfreq]-var.startl)/10*7)/100*height) | int %}
+                {% if ear==1 %}
+                    <line x1="{{ var.x - var.star }}" y1="{{ var.y - var.star }}" x2="{{ var.x + var.star }}"
+                          y2="{{ var.y + var.star }}"
+                          fill="none" stroke="{{ var.color }}" stroke-width="2"></line>
+                    <line x1="{{ var.x + var.star }}" y1="{{ var.y - var.star }}" x2="{{ var.x - var.star }}"
+                          y2="{{ var.y + var.star }}"
+                          fill="none" stroke="{{ var.color }}" stroke-width="2"></line>
+                {% else %}
+                    <circle cx="{{ var.x }}" cy="{{ var.y }}" r="{{ var.circ }}" fill="none" stroke="{{ var.color }}"
+                            stroke-width="2"></circle>
+                {% endif %}
+
+                {% set var.points = var.points~var.x|string~','~var.y|string~' ' %}
+            {% endif %}
+            <polyline points="{{ var.points }}" stroke-width="2" stroke="{{ var.color }}" fill="none"></polyline>
+        {% endfor %}
+        {% set var.points='' %}
+        {% for freq in ['125','250','500','1000','2000','3000','4000','6000','8000'] %}
+            {% set var.curfreq = 'bone_'~freq~var.sx %}
+            {% if var.curfreq in record and record[var.curfreq] is not none %}
+                {% set var.x=((10 + 14*((freq|int)/125)| log2) /100*width)| int %}
+                {% set var.y=((var.startp - 2 + (record[var.curfreq]-var.startl)/10*7)/100*height) | int %}
+                {% if ear==1 %}
+                    <line x1="{{ var.x - var.arrow/2 }}" y1="{{ var.y - var.arrow }}" x2="{{ var.x + var.arrow/2 }}"
+                          y2="{{ var.y }}"
+                          fill="none" stroke="{{ var.color }}" stroke-width="2"></line>
+                    <line x1="{{ var.x + var.arrow/2 }}" y1="{{ var.y }}" x2="{{ var.x - var.arrow/2 }}"
+                          y2="{{ var.y + var.arrow }}"
+                          fill="none" stroke="{{ var.color }}" stroke-width="2"></line>
+                {% else %}
+                    <line x1="{{ var.x + var.arrow/2 }}" y1="{{ var.y - var.arrow }}" x2="{{ var.x - var.arrow/2 }}"
+                          y2="{{ var.y }}"
+                          fill="none" stroke="{{ var.color }}" stroke-width="2"></line>
+                    <line x1="{{ var.x - var.arrow/2 }}" y1="{{ var.y }}" x2="{{ var.x + var.arrow/2 }}"
+                          y2="{{ var.y + var.arrow }}"
+                          fill="none" stroke="{{ var.color }}" stroke-width="2"></line>
+                {% endif %}
+                {% set var.points = var.points~var.x|string~','~var.y|string~' ' %}
+            {% endif %}
+            <polyline points="{{ var.points }}" stroke-width="2" stroke="{{ var.color }}" fill="none"
+                      stroke-dasharray="10,10"></polyline>
+        {% endfor %}
+
+    </svg>
+{% endmacro %}
+
+
+

@@ -1,0 +1,144 @@
+/*record date*/
+div.contr_date {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+div#record_date {
+    margin-right: 20px;
+}
+
+a.update_sub {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    background: url("../figures/mark_update.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+a.del_record {
+    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+    background: url("../figures/mark_trash.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.proj a{
+    text-decoration: none;
+    color: #000;
+}
+.proj a:hover{
+    color: #199ED8;
+}
+/*form*/
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form#hearingForm {
+    align-items: center;
+}
+
+form.field .part {
+    margin: 10px 5% 15px 2%;
+    display: flex;
+}
+
+form.field .part>div {
+    margin-right: 40px;
+}
+
+div.comments,
+div.diseases {
+    width: 80%;
+}
+
+
+
+div.proj .tag,
+div.total .tag {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.proj .state,
+div.total .state {
+    width: 100px;
+}
+
+div.proj .pay span:first-child,
+div.total .pay span:first-child {
+    margin-right: 10px;
+}
+
+
+
+/*table*/
+
+table {
+    text-align: center;
+}
+
+table tr,
+table td {
+    padding: 5px 15px;
+}
+
+td div {
+    display: flex;
+}
+
+/*thresholds*/
+.thresh_plot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.canvas .panel {
+    width: 800px;
+    height: 280px;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.canvas .panel svg{
+    width: 46%;
+    height: 95%;
+
+}
+.switch_group {
+    display: flex;
+    justify-content: center;
+}
+
+/*switch labels*/
+input.switch+label {
+    /*    padding-left: 15px;
+    padding-right: 15px;*/
+    padding: 3px 15px;
+    margin: -1px 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    /*z-index: 100;*/
+}
+
+input.switch:checked+label {
+    border-color: #ccc;
+    border-top-color: #fff;
+}

@@ -1,0 +1,120 @@
+* {
+    -webkit-box-sizing: content-box;
+    -ms-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    /*border: 1px solid red !important;*/
+}
+
+
+.panel {
+    margin: 15% auto;
+    width: 600px;
+    height: 260px;
+    padding: 30px;
+    border: 2px solid #199ED8;
+    border-radius: 10px;
+
+}
+
+.information,
+.menu {
+    width: 40%;
+    height: 100%;
+    /*    border: 1px solid #CCC;*/
+    float: left;
+}
+
+.menu {
+    width: 60%;
+}
+
+div.welcome {
+    width: 100%;
+    font-size: 35px;
+    font-family: "Arial", "Microsoft Yahei", "黑体", "宋体", "sans-serif";
+    font-weight: bold;
+    color: #199ED8;
+    text-align: center;
+    line-height: 40px;
+    padding: 50px 0;
+}
+
+form h4 {
+    margin: 10% 10% 3% 10%;
+}
+
+form input {
+    margin: 0 10%;
+    width: 70%;
+    height: 30px;
+    padding: 3px 10px;
+}
+
+.submit {
+    margin-top: 17%;
+    margin-left: 28%;
+    width: 30%;
+}
+
+.submit1 {
+    margin-top: 0%;
+    margin-left: 28%;
+    width: 30%;
+}
+
+.menu a {
+    /*border: 1px solid #CCC;*/
+    float: left;
+    margin: 10% 0 0 5%;
+    width: 42%;
+    height: 27%;
+    border-radius: 10px;
+    background-color: #199ED8;
+
+    display: flex;
+    display: -ms-flex;
+    display: -moz-flex;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    text-decoration: none;
+}
+
+.menu {
+    -webkit-perspective: 500px;
+    perspective: 500px
+}
+
+.menu a {
+    cursor: default;
+}
+
+.menu a.success {
+    cursor: pointer;
+}
+
+.menu a.success:hover {
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03);
+    /*      transition-property: transform;
+          transition-duration: 1s;
+          transition-delay: 0s;*/
+}
+
+.menu a.success:active {
+    -webkit-transform: scale(0.97);
+    transform: scale(0.97);
+}
+
+.menu .title {
+    /*border: 1px solid #CCC;*/
+    margin-left: 4%;
+}
+
+.menu img {
+    margin-left: 7%;
+    width: 30%;
+    height: 70%;
+
+}

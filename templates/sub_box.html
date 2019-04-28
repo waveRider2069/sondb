@@ -1,0 +1,122 @@
+{% macro sub_box(rec,projs) %}
+    <div id="sub_" class="sub_box">
+        <a href="{{ url_for('subject.view_single',idr=rec['idr']) }}" class="elem_linkage" target="_blank">
+            <div class="part general">
+                <div class="elem subname">{{ rec['subname']  | title }}</div>
+                <div class="elem gender">{% if rec['gender'] %}{{ rec['gender'] | capitalize }}{% endif %}</div>
+                <div class="elem age">{% if rec['age'] %}{{ rec['age'] | string +'(age)' }}{% endif %}</div>
+                <div class="elem attitude">{% if rec['attitude'] %}{{ rec['attitude']  | capitalize }}{% endif %}</div>
+                <div class="elem location">{% if rec['location'] %}{{ rec['location']  | capitalize }}{% endif %}</div>
+                <div class="elem time">{% if rec['spare'] %}{{ rec['spare'] | capitalize }}{% endif %}
+                    {% if rec['sparenote'] %}{{ '('+rec['sparenote']+')' }}{% endif %}</div>
+                <div class="elem phone">{% if rec['phone'] %}{{ rec['phone'] }}{% endif %}</div>
+            </div>
+        </a>
+        <div class="part hint hearing">
+            <div class="entry">HL:&nbsp;</div>
+            <div class="group left">
+                <div class="elem side">(R)</div>
+                <div class="elem pta">
+                    {% if rec['air_avgr'] is not none %}{{ rec['air_avgr']  | round | int | string +'/' }}{% else %}
+                        {{ '(air)/' }}{% endif -%}
+                    {% if rec['bone_avgr'] is not none %}{{ rec['bone_avgr']  | round |int| string +'dB' }}{% else %}
+                        {{ '(bone)dB' }}{% endif %}</div>
+                <div class="elem degree">
+                    {% if rec['air_levelr'] %}{{ rec['air_levelr']  | capitalize }}{% endif %}</div>
+                <div class="elem cause">
+                    {% if rec['cause_right'] %}{{ rec['cause_right']  | capitalize }}{% endif %}</div>
+                <div class="elem shape">
+                    {% if rec['shape_right'] %}{{ rec['shape_right']  | capitalize }}{% endif %}</div>
+                <div class="elem immittance">
+                    {% if rec['immittance_right'] and rec['immittance_right']!='A' -%}
+                        {{ rec['immittance_right']  | capitalize }}{% endif %}</div>
+            </div>
+            <div class="group">&nbsp;&nbsp;&nbsp;</div>
+            <div class="group right">
+                <div class="elem side">&nbsp;(L)</div>
+                <div class="elem pta">
+                    {% if rec['air_avgl'] is not none %}{{ rec['air_avgl']  | round | int|string +'/' }}{% else %}
+                        {{ '(air)/' }}{% endif -%}
+                    {% if rec['bone_avgl'] is not none %}{{ rec['bone_avgl']  | round | int|string +'dB' }}{% else %}
+                        {{ '(bone)dB' }}{% endif %}</div>
+                <div class="elem degree">
+                    {% if rec['air_levell'] %}{{ rec['air_levell']  | capitalize }}{% endif %}</div>
+                <div class="elem cause">{% if rec['cause_left'] %}{{ rec['cause_left']  | capitalize }}{% endif %}</div>
+                <div class="elem shape">{% if rec['shape_left'] %}{{ rec['shape_left']  | capitalize }}{% endif %}</div>
+                <div class="elem immittance">
+                    {% if rec['immittance_left'] and rec['immittance_left']!='A' -%}
+                        {{ rec['immittance_left']  | capitalize }}{% endif %}</div>
+            </div>
+        </div>
+        <div class="part hint projects">
+            <div class="entry">Projs:&nbsp;</div>
+            <div class="group proj">
+                {% for idp in rec['idps'] %}
+                    <a class="elem" href="{{ url_for('projects.view_single', idp=idp) }}"
+                       target="_blank">{{ rec['abbrs'][loop.index0] }}</a>&nbsp;
+                {% endfor %}
+            </div>
+        </div>
+        <div class="part hint notes">
+            <div class="entry">Notes:&nbsp;</div>
+            <div class="elem comments">{{ rec['comments'] }}</div>
+        </div>
+        <div class="widget hint record_date">
+            <select name="record_date_w" class="widget slidedown select_list">
+                {% for date in rec['rdates'] %}
+                    <option value="{{ rec['idrs'][loop.index0] }}">{{ date }}</option>
+                {% endfor %}
+            </select></div>
+        <div class="widget icon">
+            <div class="add_proj_w" title="add new project"></div>
+            <div class="dismiss_proj_w" title="remove project from the subject"></div>
+            <a class="update_sub_w" title="update the record" href="{{ url_for('subject.update',idr=rec['idr']) }}"></a>
+            <div class="collect_sub_w" title="add this subject to collections"></div>
+        </div>
+        <select name="addproj_w" class="widget slidedown select_list" size="5">
+            {% for idp,abbr in projs %}
+                {% if idp not in rec['idps'] %}
+                    <option value="{{ idp }}">{{ abbr }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <select name="dismissproj_w" class="widget slidedown select_list" size="5">
+            {% for idp in rec['idps'] %}
+                <option value="{{ idp }}">{{ rec['abbrs'][loop.index0] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{% endmacro %}s
+
+
+{% macro pagination(pageN,p_index) %}
+    <div id="p_home" class="p_static{% if p_index==1 %} disabled{% endif %}">Home</div>
+    <div id="p_pre" class="p_static{% if p_index==1 %} disabled{% endif %}">Pre</div>
+    <div id="p_group">
+        {% if pageN<=8 %}
+            {% for p in range(1,pageN + 1,1) %}
+                <div id="{{ 'p_' + p | string }}" class="p_cubic{% if p==p_index %} p_cur{% endif %}">{{ p }}</div>
+            {% endfor %}
+        {% else %}
+            {% for p in range([1,p_index-4]|max,p_index + 1,1) %}
+                <div id="{{ 'p_' + p | string }}" class="p_cubic{% if p==p_index %} p_cur{% endif %}">{{ p }}</div>
+            {% endfor %}
+            {% for p in range(p_index + 1,[pageN,[8,p_index + 4]|max] | min + 1,1) %}
+                <div id="{{ 'p_' + p | string }}" class="p_cubic">{{ p }}</div>
+                {% if loop.last and p<pageN %}
+                    <div id="p_m">...</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div id="p_next" class="p_static{% if p_index==pageN %} disabled{% endif %}">Next</div>
+    <div id="p_end" class="p_static{% if p_index==pageN %} disabled{% endif %}">End</div>
+    <div id="p_hint">{{ pageN }} pages, go to</div>
+    <input id="p_input" class="p_cubic" type="number" name="p_to" step="1" min="1">
+    <div id="p_go" class="p_cubic">Go</div>
+{% endmacro %}
+
+
+
+
+

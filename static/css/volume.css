@@ -1,0 +1,103 @@
+.panel {
+    width: 500px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    /*border: 1px #ccc solid;*/
+    /*padding-top: 10px;*/
+}
+.panel_bi{
+    width: 100%;
+}
+
+
+
+.panel .freq {
+    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.thresh {
+    height: 70%;
+    margin: 15% 0 20% 0;
+    /*background-color: #199ED8;*/
+
+}
+
+.slider {
+    height: 100%;
+    /*transform: scaleX(1.05);*/
+    background-color: #ccc;
+}
+
+#f250aUp,
+#f250aDw,
+#f500aUp,
+#f500aDw,
+#f1000aUp,
+#f1000aDw,
+#f2000aUp,
+#f2000aDw,
+#f4000aUp,
+#f4000aDw,
+#f8000aUp,
+#f8000aDw,
+#f250bUp,
+#f250bDw,
+#f500bUp,
+#f500bDw,
+#f1000bUp,
+#f1000bDw,
+#f2000bUp,
+#f2000bDw,
+#f4000bUp,
+#f4000bDw,
+#f8000bUp,
+#f8000bDw {
+    height: 12%;
+    line-height: 1.5em;
+    left: -45%;
+    width: 180%;
+    font-size: 70%;
+    text-align: center;
+    background-color: #ccc;
+}
+
+/*age*/
+.sliderAgeRange {
+    width: 150px;
+    height: 15px;
+    background-color: #ccc;
+}
+
+#ageUp,
+#ageDw {
+    height: 23px;
+    width: 23px;
+    line-height: 23px;
+    top: 50%;
+    margin-top: -.8em;
+    text-align: center;
+    background-color: #ccc
+}
+
+#age {
+    height: 23px;
+    width: 28px;
+    line-height: 23px;
+    top: 50%;
+    margin-top: -.8em;
+    text-align: center;
+    background-color: #ccc
+}
+
+.sliderAge {
+    width: 170px;
+    height: 15px;
+    background-color: #eee;
+
+}

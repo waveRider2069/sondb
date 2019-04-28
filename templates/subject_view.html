@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>view subject SSDB</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/form.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/form_subject_view.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/button.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/header_footer.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/typography.css') }}">
+    <link rel="icon" href="{{ url_for('static',filename='figures/logo.png') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}" type="text/javascript"></script>
+</head>
+
+<body>
+<header class="navigation">
+    <nav class="main_menu">
+        <a href="{{ url_for('consult.ready') }}" class="toConsult navhead">Consult</a>
+        <a href="#" class="toCollection navhead">Collection</a>
+        <a href="{{ url_for('subject.new') }}" class="toSubject curModule navhead">Subject</a>
+        <a href="{{ url_for('projects.overview') }}" class="toProject navhead">Projects</a>
+    </nav>
+    <nav class="dir_path">
+        <a class="navpath">Subject</a>
+        <span>/</span>
+        <a class="curPath navpath">{{ params['subname'] }}</a>
+    </nav>
+</header>
+<section class="conditions">
+    <div class="contr_date">
+        <div id="record_date">
+            <select name="record_date" class="select_list">
+                {% for record in records %}
+                    <option value="{{ record['idr'] }}" {% if record['idr'] == params['idr'] %}
+                            selected {% endif %}>&nbsp;&nbsp;{{ record['date'] }}&nbsp;&nbsp;
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <a class="update_sub" title="Update the record"
+           href="{{ url_for('subject.update',idr=params['idr']) }}"></a>
+        <a class="del_record" title="Delete the record" id="{{ params['idr'] }}"></a>
+    </div>
+    <div name="generalForm" class="unfold line">
+        <div>General Information</div>
+        <hr class="indi_view">
+        <div class="arrow-down indi_view"></div>
+    </div>
+    <form id="generalForm" class="field tosubmit unfolded">
+        <div class="part">
+            {% for cond in ['subname','gender','age','phone'] %}
+                <div><span class="hint">{{ cond }}: </span><span>{% if params[cond] %}
+                    {{ params[cond] | capitalize }}{% endif %}</div>
+            {% endfor %}
+        </div>
+        <div class="part">
+            {% for cond in ['attitude','location'] %}
+                <div><span class="hint">{{ cond }}: </span><span>{% if params[cond] %}
+                    {{ params[cond] | capitalize }}{% endif %}</div>
+            {% endfor %}
+            <div><span class="hint">spare time: </span><span
+                    class="spare">{% if params['spare'] %}{{ params['spare'] | capitalize }}{% endif %}&nbsp</span><span
+                    class="sparenote">{% if params['sparenote'] %}({{ params['sparenote'] }}){% endif %}</span></div>
+        </div>
+        <div class="part">
+            <div><span class="hint">hearing aid: </span><span
+                    class="aidwearing">{% if params['aidwearing'] %}
+                {{ params['aidwearing'] | capitalize }}{% endif %}</span></div>
+        </div>
+        <div class="part">
+            <div><span class="hint">right ear: </span>
+                <span>{% if params['air_avgr'] is not none %}
+                    {{ params['air_avgr']  | round | int | string +'/' }}{% else %}
+                    {{ '(air)/' }}{% endif -%}
+                    {% if params['bone_avgr'] %}{{ params['bone_avgr']  | int | int | string +'dB' }}{% else %}
+                        {{ '(bone)dB' }}{% endif %}</span>
+                <span>{% if params['air_levelr'] %}{{ params['air_levelr']  | capitalize }}{% endif %}</span>
+                <span>{% if params['cause_right'] %}{{ params['cause_right']  | capitalize }}{% endif %}</span>
+                <span>{% if params['shape_right'] %}{{ params['shape_right']  | capitalize }}{% endif %}</span>
+                <span>{% if params['immittance_right'] and params['immittance_right']!='A' -%}
+                    {{ params['immittance_right']  | capitalize }}{% endif %}</span></div>
+        </div>
+        <div class="part">
+            <div><span class="hint">left ear: </span>
+                <span>{% if params['air_avgl'] is not none %}
+                    {{ params['air_avgl']  | round | int | string +'/' }}{% else %}
+                    {{ '(air)/' }}{% endif -%}
+                    {% if params['bone_avgl'] %}{{ params['bone_avgl']  | int | int | string +'dB' }}{% else %}
+                        {{ '(bone)dB' }}{% endif %}</span>
+                <span>{% if params['air_levell'] %}{{ params['air_levell']  | capitalize }}{% endif %}</span>
+                <span>{% if params['cause_left'] %}{{ params['cause_left']  | capitalize }}{% endif %}</span>
+                <span>{% if params['shape_left'] %}{{ params['shape_left']  | capitalize }}{% endif %}</span>
+                <span>{% if params['immittance_left'] and params['immittance_left']!='A' -%}
+                    {{ params['immittance_left']  | capitalize }}{% endif %}</span></div>
+        </div>
+        <div class="part">
+            <div><span class="hint">disease history: </span><span class="diseases">{% if params['diseases'] %}
+                {{ params['diseases'] }}{% endif %}</span></div>
+        </div>
+        <div class="part">
+            <div><span class="hint">notes: </span><span class="comments">{% if params['comments'] %}
+                {{ params['comments'] }}{% endif %}</span>
+            </div>
+        </div>
+    </form>
+    <div name="hearingForm" class="unfold line">
+        <div>Audiogram</div>
+        <hr class="indi_view">
+        <div class="arrow-down indi_view"></div>
+    </div>
+    <form id="hearingForm" class="field tosubmit unfolded">
+        <div class="part thresh_plot">
+            <div class="canvas history">
+                {% from 'audiogram.html' import audiogram with context %}
+                {% for record in records %}
+                    <div class="{% if params['rdate'] == record['date'] %}current{% endif %} d{{ record['date'] }} panel panel_bi">
+                        {{ audiogram(record,2,368,266) }}
+                        {{ audiogram(record,1,368,266) }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="switch_group">
+                {% for record in records %}
+                    <input class="{% if params['rdate'] == record['date'] %}current{% endif %} switch" type="radio"
+                           value="{{ record['date'] }}" name="history" id="d{{ record['date'] }}">
+                    <label class="switch" for="d{{ record['date'] }}">{{ record['date'] }}</label>
+                {% endfor %}
+            </div>
+        </div>
+    </form>
+    <div name="projectsForm" class="unfold line">
+        <div>Projects Participated</div>
+        <hr class="indi_view">
+        <div class="arrow-down indi_view"></div>
+    </div>
+    <form id="projectsForm" class="field tosubmit unfolded">
+        {% for proj in projs %}
+            <div class="part proj">
+                <div class="tag">
+                    <a href="{{ url_for('projects.view_single',idp=proj['idp']) }}">{{ proj['abbr'] | capitalize }}</a>
+                </div>
+                <div class="state">{% if proj['isfinish']=='yes' %}Finished{% else %}Unfinished{% endif %}</div>
+                <div class="pay"><span>Pay</span><span>{{ proj['pay'] }}</span></div>
+            </div>
+            {% if loop.last %}
+                <div class="part total ">
+                    <div class="tag"></div>
+                    <div class="state"></div>
+                    <div class="pay"><span>Total</span><span>{{ totalpay }}</span></div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+
+    </form>
+    <div name="testsForm" class="unfold line">
+        <div>Tests completed</div>
+        <hr class="indi_view">
+        <div class="arrow-down indi_view"></div>
+    </div>
+    <form id="testsForm" class="field tosubmit unfolded">
+        <div class="part tests">
+            {% for test in tests %}
+                <div>{{ test['name'] | upper }}</div>
+            {% endfor %}
+        </div>
+    </form>
+</section>
+<footer>----------footer-----------</footer>
+<script src="{{ url_for('static',filename='js/effect.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static',filename='js/effect-canvas.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static',filename='js/effect-subject.js') }}" type="text/javascript"></script>
+</body>
+</body>
+
+</html>

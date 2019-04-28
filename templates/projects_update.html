@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>update project SSDB</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/form.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/form_projects.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/button.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/header_footer.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/typography.css') }}">
+    <link rel="icon" href="{{ url_for('static',filename='figures/logo.png') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}" type="text/javascript"></script>
+</head>
+
+<body>
+<header class="navigation">
+    <nav class="main_menu">
+        <a href="{{ url_for('consult.ready') }}" class="toConsult navhead">Consult</a>
+        <a href="#" class="toCollection navhead">Collection</a>
+        <a href="{{ url_for('subject.new') }}" class="toSubject navhead">Subject</a>
+        <a href="{{ url_for('projects.overview') }}" class="toProject curModule navhead">Projects</a>
+    </nav>
+    <nav class="dir_path">
+        <a class="navpath">Projects</a>
+        <span>/</span>
+        <a href="{{ url_for('projects.overview') }}" class="navpath">View</a>
+        <span>/</span>
+        <a href="{{ url_for('projects.view_single', idp=idp) }}" class="navpath">{{ params['abbr'] }}</a>
+        <span>/</span>
+        <a class="curPath navpath">Update</a>
+    </nav>
+</header>
+<section>
+    <form class="one_whole" id="form-updateproj">
+        <div class="item state">
+            <div class="tag">State</div>
+            <div class="space"></div>
+            {% set state_text = ['In progress', 'Finished', 'Suspend', 'Cancel'] %}
+            {% set state =  ['in progress', 'finished', 'suspended', 'canceled'] %}
+            {% for s in range(4) %}
+                {% if state[s] == params['state']|lower %}
+                    <input type="radio" class="state single color_option" name="state" value="{{ state[s] }}"
+                           id="{{ state[s]|replace(' ','_') }}" checked>
+                {% else %}
+                    <input type="radio" class="state single color_option" name="state" value="{{ state[s] }}"
+                           id="{{ state[s]|replace(' ','_') }}">
+                {% endif %}
+                <label for="{{ state[s]|replace(' ','_') }}">{{ state_text[s] }}</label>
+            {% endfor %}
+        </div>
+        <div class="item title">
+            <div class="tag">Title</div>
+            <div class="space"></div>
+            <input maxlength="120" type="text" class="type_in" name="title" value="{{ params['title'] }}"
+                   required>
+        </div>
+        <div class="item abbr">
+            <div class="tag">Abbreviation</div>
+            <div class="space"></div>
+            <input maxlength="60" type="text" class="type_in" name="abbr"
+                   value="{{ params['abbr'] }}" required>
+        </div>
+        <div class="item leader">
+            <div class="tag">Project leader</div>
+            <div class="space"></div>
+            <input type="text" class="type_in" name="leader" value="{{ params['leader'] }}" required>
+        </div>
+        <div class="time_box">
+            <div class="item start_time">
+                <div class="tag">Start time</div>
+                <div class="space"></div>
+                <input type="date" class="select_list" value="{{ params['start_time'] }}"
+                       name="start_time" required>
+            </div>
+            <div class="item dueto_end">
+                <div class="tag">Expected finish time</div>
+                <div class="space"></div>
+                <input type="date" class="select_list" value="{{ params['dueto_end'] }}" name="dueto_end"
+                       required>
+            </div>
+        </div>
+        <div class="item budget">
+            <div class="tag">Budget</div>
+            <div class="space"></div>
+            <input type="number" step="1" min="0" class="type_in" name="budget"
+                   value="{{ params['budget'] }}">
+            <div class="hint">RMB/yuan</div>
+        </div>
+        <div class="item subjectN">
+            <div class="tag">Subject amount</div>
+            <div class="space"></div>
+            <input type="number" step="1" min="0" class="type_in" name="subjectn"
+                   value="{{ params['subjectn'] }}">
+            <div class="hint">expected number of subjects</div>
+        </div>
+        <div class="item visits">
+            <div class="tag">Visit times</div>
+            <div class="space"></div>
+            <input type="number" min="0" class="type_in" name="visits" value="{{ params['visits'] }}">
+            <div class="hint">visiting times required for each subject</div>
+        </div>
+        <div class="item description">
+            <div class="tag">Description</div>
+            <div class="space"></div>
+            <textarea class="type_in" name="description" maxlength="490"
+                      placeholder="Purpose / Methods / Tests / Expected outcomes /">{{ params['description'] }}</textarea>
+        </div>
+    </form>
+    <div class="go line">
+        <hr>
+        <input form="form-updateproj" class="go" name="update_project" type="submit" formmethod="post"
+               formaction="{{ url_for('projects.modify',idp=idp) }}" value="Update">
+        <hr>
+    </div>
+</section>
+<script src="{{ url_for('static',filename='js/effect-proj.js') }}" type="text/javascript"></script>
+</body>
+
+</html>
