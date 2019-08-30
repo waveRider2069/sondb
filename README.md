@@ -1,7 +1,7 @@
 # Markdown Guide
 This is a quick guide [^1] for Markdown, a lightweight and easy-to-use syntax for writing.
 
-## What is Markdown??
+## What is Markdown???
 Markdown is a way to style text via a few simple marker characters. You could write the document in plain text and then read it with a beautiful typesetting.
 
 There is no a standard Markdown syntax and many editor will add its own additional syntax. VNote supports only the widely-used basic syntax.
