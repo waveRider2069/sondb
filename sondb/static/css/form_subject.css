@@ -20,13 +20,16 @@ div#record_date {
 }
 
 form#hearingForm .cond,
-div#experimentForm .cond {
+div#experimentForm .cond,
+form#experimentForm .cond{
     flex-direction: column;
 }
 
 form#personalForm .part,
 div#experimentForm .part,
-.speech {
+form#experimentForm .part,
+
+.speech{
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
@@ -34,7 +37,8 @@ div#experimentForm .part,
 
 form#personalForm .content,
 div#experimentForm .content,
-.speech .content {
+form#experimentForm .content,
+.speech .content{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -43,6 +47,9 @@ div#experimentForm .content,
 
 .tag {
     margin-right: 20px;
+}
+form#updateForm .part{
+    margin-left: 100px;
 }
 
 .part.proj .tag {
@@ -115,7 +122,7 @@ input[name='sparenote'] {
 }
 
 .canvas {
-    width: 80%;
+    width: 90%;
     height: 220px;
     padding-top: 10px;
     border: 1px solid #ccc;
@@ -168,11 +175,12 @@ td div {
 }
 
 /*text*/
-input[name=subname],
-input[name=phone] {
+input[name=subname] {
     width: 140px;
 }
-
+input[name=phone] {
+    width: 200px;
+}
 select[name=addproj] {
     width: 150px;
 }

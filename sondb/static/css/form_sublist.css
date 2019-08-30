@@ -13,10 +13,12 @@ form.sort {
     justify-content: flex-start;
     align-items: center;
 }
-form.sort .stats{
+
+form.sort .stats {
     margin-left: 20px;
     margin-right: 10px;
 }
+
 form.sort label {
     margin-right: 15px;
 }
@@ -29,9 +31,11 @@ div.sub_box {
     position: relative;
     margin-bottom: 10px;
 }
-.sub_box .part{
-	margin:8px 0px;
+
+.sub_box .part {
+    margin: 8px 0px;
 }
+
 .sub_box .part,
 .sub_box .group,
 .sub_box .widget.icon {
@@ -49,6 +53,16 @@ div.sub_box {
     margin-right: 10px
 }
 
+.sub_box .part.notes {
+    margin-right: 100px;
+}
+
+.sub_box .part.notes .elem {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .sub_box .general .elem {
     margin-right: 15px;
 }
@@ -57,10 +71,12 @@ a.elem {
     text-decoration: none;
     color: #949494;
 }
+
 a.elem:hover {
     /*text-decoration: none;*/
     color: #199ED8;
 }
+
 .sub_box .widget {
     position: absolute;
 }
@@ -70,9 +86,9 @@ a.elem:hover {
     top: 10px;
     border: 0;
     background: transparent;
-    -webkit-appearance:none;
-       -moz-appearance:none;
-            appearance:none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 
 }
 
@@ -105,7 +121,6 @@ a.elem:hover {
     background: url("../figures/mark_liked.png");
 
 }
-
 
 
 .icon .dismiss_proj_w,

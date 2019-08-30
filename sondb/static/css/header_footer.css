@@ -36,3 +36,30 @@ nav .curPath,
 nav .curModule {
     color: #199ED8;
 }
+
+section.statusbar div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /*margin-left: 5%;*/
+    color: #888;
+}
+section.statusbar span {
+ margin-right: 18px;
+}
+section.statusbar a {
+    text-decoration: none;
+}
+section.statusbar a:visited {
+    color: #888;
+}
+section.statusbar a:hover {
+    /*color: #199ED8;*/
+    cursor: pointer;
+}
+
+section.statusbar a:active {
+    color: #199ED8;
+    /*cursor: pointer;*/
+}
+

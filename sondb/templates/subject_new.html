@@ -16,6 +16,7 @@
 </head>
 
 <body>
+{% include 'status_bar.html' %}
 <header class="navigation">
     <nav class="main_menu">
         <a href="{{ url_for('consult.ready') }}" class="toConsult navhead">Consult</a>
@@ -57,15 +58,15 @@
             <div class="part phone">
                 <div class="tag">Phone</div>
                 <div class="content">
-                    <input type="text" name="phone" class="type_in">
+                    <input type="text" name="phone" class="type_in" maxlength="60">
                 </div>
             </div>
             <div class="part gender">
                 <div class="tag">Gender</div>
                 <div class="content">
-                    <input type="checkbox" class="single color_option" name="gender" value="male" id="male">
+                    <input type="checkbox" class="single color_option" name="gender" value="M" id="male">
                     <label for="male">male</label>
-                    <input type="checkbox" class="single color_option" name="gender" value="female" id="female">
+                    <input type="checkbox" class="single color_option" name="gender" value="F" id="female">
                     <label for="female">female</label>
                 </div>
             </div>
@@ -121,8 +122,10 @@
             <div class="part aidwearing">
                 <div class="tag">Hearing aid wearing</div>
                 <div class="content">
-                    <input type="checkbox" class="single color_option" name="aidwearing" value="not wearing" id="none">
-                    <label for="none">none</label>
+                    <input type="checkbox" class="single color_option" name="aidwearing" value="neither" id="neither">
+                    <label for="neither">neither</label>
+                    <input type="checkbox" class="single color_option" name="aidwearing" value="either" id="either">
+                    <label for="either">either</label>
                     <input type="checkbox" class="single color_option" name="aidwearing" value="unilateral"
                            id="unilateral">
                     <label for="unilateral">unilateral</label>
@@ -151,201 +154,78 @@
             <div class="part thresholds">
                 <div class="tag">Pure tone thresholds</div>
                 <div class="content">
-                    <div class="thresh_in">
+                    {% set freqs = namespace(f1=['125','250','500','750','1000','1500','2000','3000','4000','6000','8000'],f2=['.125','.25','.5','.75','1k','1.5k','2k','3k','4k','6k','8k']) %}
+                    <div class="pta_simple_ver">
                         <div class="canvas conduction">
                             <div class="air panel thresh">
                                 <div class="group right"><span class="hint">right</span>
                                     <div class="slides">
-                                        <div class="range oneh vertical">
-                                            <input name="air_250r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_500r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_1000r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_2000r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_4000r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_8000r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
+                                        {%- for freq in freqs.f1 -%}
+                                            <div class="range oneh vertical">
+                                                <input name="{{ 'air_'~freq~'r' }}" type="range" min="-20" max="120"
+                                                       step="1" value="-20">
+                                                <div class="slide_prog"></div>
+                                                <div class="slide_handle"></div>
+                                            </div>
+                                        {%- endfor -%}
                                     </div>
                                     <div class="hint">
-                                        <div>250</div>
-                                        <div>500</div>
-                                        <div>1000</div>
-                                        <div>2000</div>
-                                        <div>4000</div>
-                                        <div>8000</div>
+                                        {%- for freq in freqs.f2 -%}
+                                            <div>{{ freq }}</div>
+                                        {%- endfor -%}
                                     </div>
                                 </div>
                                 <div class="group left"><span class="hint">left</span>
                                     <div class="slides">
-                                        <div class="range oneh vertical">
-                                            <input name="air_250l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_500l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_1000l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_2000l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_4000l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="air_8000l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
+                                        {%- for freq in freqs.f1 -%}
+                                            <div class="range oneh vertical">
+                                                <input name="{{ 'air_'~freq~'l' }}" type="range" min="-20" max="120"
+                                                       step="1" value="-20">
+                                                <div class="slide_prog"></div>
+                                                <div class="slide_handle"></div>
+                                            </div>
+                                        {%- endfor -%}
                                     </div>
                                     <div class="hint">
-                                        <div>250</div>
-                                        <div>500</div>
-                                        <div>1000</div>
-                                        <div>2000</div>
-                                        <div>4000</div>
-                                        <div>8000</div>
+                                        {%- for freq in freqs.f2 -%}
+                                            <div>{{ freq }}</div>
+                                        {%- endfor -%}
                                     </div>
                                 </div>
                             </div>
                             <div class="bone panel thresh">
                                 <div class="group right"><span class="hint">right</span>
                                     <div class="slides">
-                                        <div class="range oneh vertical">
-                                            <input name="bone_250r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_500r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_1000r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_2000r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_4000r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_8000r" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
+                                        {%- for freq in freqs.f1 -%}
+                                            <div class="range oneh vertical">
+                                                <input name="{{ 'bone_'~freq~'r' }}" type="range" min="-20" max="120"
+                                                       step="1" value="-20">
+                                                <div class="slide_prog"></div>
+                                                <div class="slide_handle"></div>
+                                            </div>
+                                        {%- endfor -%}
                                     </div>
                                     <div class="hint">
-                                        <div>250</div>
-                                        <div>500</div>
-                                        <div>1000</div>
-                                        <div>2000</div>
-                                        <div>4000</div>
-                                        <div>8000</div>
+                                        {%- for freq in freqs.f2 -%}
+                                            <div>{{ freq }}</div>
+                                        {%- endfor -%}
                                     </div>
                                 </div>
                                 <div class="group left"><span class="hint">left</span>
                                     <div class="slides">
-                                        <div class="range oneh vertical">
-                                            <input name="bone_250l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_500l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_1000l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_2000l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_4000l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
-                                        <div class="range oneh vertical">
-                                            <input name="bone_8000l" type="range" min="-20" max="120" step="5"
-                                                   value="-20">
-                                            <div class="slide_prog"></div>
-                                            <div class="slide_handle"></div>
-                                        </div>
+                                        {%- for freq in freqs.f1 -%}
+                                            <div class="range oneh vertical">
+                                                <input name="{{ 'bone_'~freq~'l' }}" type="range" min="-20" max="120"
+                                                       step="1" value="-20">
+                                                <div class="slide_prog"></div>
+                                                <div class="slide_handle"></div>
+                                            </div>
+                                        {%- endfor -%}
                                     </div>
                                     <div class="hint">
-                                        <div>250</div>
-                                        <div>500</div>
-                                        <div>1000</div>
-                                        <div>2000</div>
-                                        <div>4000</div>
-                                        <div>8000</div>
+                                        {%- for freq in freqs.f2 -%}
+                                            <div>{{ freq }}</div>
+                                        {%- endfor -%}
                                     </div>
                                 </div>
                             </div>
@@ -357,17 +237,6 @@
                             <label class="switch" for="bone">bone conduction</label>
                         </div>
                     </div>
-{#                    <div class="go">#}
-{#                        <input class="go" type="button" onclick="" value="Plot audiogram">#}
-{#                    </div>#}
-{#                    <div class="thresh_plot">#}
-{#                        <div class="canvas history">#}
-{#                            <canvas id="ctx_right" class="d2018-12-21 right">#}
-{#                            </canvas>#}
-{#                            <canvas id="ctx_left" class="d2018-12-21 left">#}
-{#                            </canvas>#}
-{#                        </div>#}
-{#                    </div>#}
                 </div>
             </div>
             <div class="part category">
@@ -518,18 +387,24 @@
             <div class="part tests">
                 <div class="tag">Tests done</div>
                 <div class="content">
-                    <input type="checkbox" class="multiple color_option" name="tests" value="mhint-24" id="mhint24">
-                    <label for="mhint24">MHINT-24</label>
-                    <input type="checkbox" class="multiple color_option" name="tests" value="mhint-12" id="mhint12">
-                    <label for="mhint12">MHINT-12</label>
-                    <input type="checkbox" class="multiple color_option" name="tests" value="cnsm" id="cnsm">
-                    <label for="cnsm">CNSM</label>
-                    <input type="checkbox" class="multiple color_option" name="tests" value="mstm" id="mstm">
-                    <label for="mstm">MSTM</label>
-                    <input type="checkbox" class="multiple color_option" name="tests" value="ppt" id="ppt">
-                    <label for="ppt">PPT</label>
-                    <input type="checkbox" class="multiple color_option" name="tests" value="others" id="others">
-                    <label for="others">others</label>
+                    {% for test in tests %}
+                        <input type="checkbox" class="multiple color_option" name="tests" value="{{ test['idt'] }}"
+                               id="{{ test['idt'] }}">
+                        <label for="{{ test['idt'] }}"
+                               title="{{ test['description'] }}">{{ test['name'] | upper }}</label>
+                    {% endfor %}
+                    {#                    <input type="checkbox" class="multiple color_option" name="tests" value="mhint-24" id="mhint24">#}
+                    {#                    <label for="mhint24">MHINT-24</label>#}
+                    {#                    <input type="checkbox" class="multiple color_option" name="tests" value="mhint-12" id="mhint12">#}
+                    {#                    <label for="mhint12">MHINT-12</label>#}
+                    {#                    <input type="checkbox" class="multiple color_option" name="tests" value="cnsm" id="cnsm">#}
+                    {#                    <label for="cnsm">CNSM</label>#}
+                    {#                    <input type="checkbox" class="multiple color_option" name="tests" value="mstm" id="mstm">#}
+                    {#                    <label for="mstm">MSTM</label>#}
+                    {#                    <input type="checkbox" class="multiple color_option" name="tests" value="ppt" id="ppt">#}
+                    {#                    <label for="ppt">PPT</label>#}
+                    {#                    <input type="checkbox" class="multiple color_option" name="tests" value="others" id="others">#}
+                    {#                    <label for="others">others</label>#}
                 </div>
             </div>
         </div>
@@ -544,7 +419,7 @@
         <div class="cond">
             <div class="part comments">
                 <div class="content">
-                    <textarea name="comments" class="type_in" maxlength="250"
+                    <textarea name="comments" class="type_in" maxlength="1000"
                               placeholder="--Note down any other information you think important in here--"></textarea>
                 </div>
             </div>
@@ -561,11 +436,9 @@
 <script src="{{ url_for('static',filename='js/slide_bar.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static',filename='js/effect.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static',filename='js/effect-canvas.js') }}" type="text/javascript"></script>
-
-<script src="{{ url_for('static',filename='js/audiogram_canvas.js') }}" type="text/javascript"></script>
+{#<script src="{{ url_for('static',filename='js/audiogram_canvas.js') }}" type="text/javascript"></script>#}
 <script src="{{ url_for('static',filename='js/effect-subject.js') }}" type="text/javascript"></script>
 
-</body>
 </body>
 
 </html>

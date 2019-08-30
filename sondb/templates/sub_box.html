@@ -14,13 +14,13 @@
         </a>
         <div class="part hint hearing">
             <div class="entry">HL:&nbsp;</div>
-            <div class="group left">
+            <div class="group right">
                 <div class="elem side">(R)</div>
                 <div class="elem pta">
-                    {% if rec['air_avgr'] is not none %}{{ rec['air_avgr']  | round | int | string +'/' }}{% else %}
-                        {{ '(air)/' }}{% endif -%}
-                    {% if rec['bone_avgr'] is not none %}{{ rec['bone_avgr']  | round |int| string +'dB' }}{% else %}
-                        {{ '(bone)dB' }}{% endif %}</div>
+                    {% if rec['air_avgr'] is not none -%}
+                        {{ rec['air_avgr']  | round | int | string }}{% else %}{{'_'}}{% endif -%}{{ '(a)/' }}
+                    {%- if rec['bone_avgr'] is not none -%}
+                        {{ rec['bone_avgr']  | round |int| string }}{% else %}{{'_'}}{% endif %}{{ '(b)dB' }}</div>
                 <div class="elem degree">
                     {% if rec['air_levelr'] %}{{ rec['air_levelr']  | capitalize }}{% endif %}</div>
                 <div class="elem cause">
@@ -32,13 +32,13 @@
                         {{ rec['immittance_right']  | capitalize }}{% endif %}</div>
             </div>
             <div class="group">&nbsp;&nbsp;&nbsp;</div>
-            <div class="group right">
+            <div class="group left">
                 <div class="elem side">&nbsp;(L)</div>
                 <div class="elem pta">
-                    {% if rec['air_avgl'] is not none %}{{ rec['air_avgl']  | round | int|string +'/' }}{% else %}
-                        {{ '(air)/' }}{% endif -%}
-                    {% if rec['bone_avgl'] is not none %}{{ rec['bone_avgl']  | round | int|string +'dB' }}{% else %}
-                        {{ '(bone)dB' }}{% endif %}</div>
+                    {% if rec['air_avgl'] is not none -%}
+                        {{ rec['air_avgl']  | round | int | string }}{% else %}{{'_'}}{% endif -%}{{ '(a)/' }}
+                    {%- if rec['bone_avgl'] is not none -%}
+                        {{ rec['bone_avgl']  | round |int| string }}{% else %}{{'_'}}{% endif %}{{ '(b)dB' }}</div>
                 <div class="elem degree">
                     {% if rec['air_levell'] %}{{ rec['air_levell']  | capitalize }}{% endif %}</div>
                 <div class="elem cause">{% if rec['cause_left'] %}{{ rec['cause_left']  | capitalize }}{% endif %}</div>
@@ -59,7 +59,7 @@
         </div>
         <div class="part hint notes">
             <div class="entry">Notes:&nbsp;</div>
-            <div class="elem comments">{{ rec['comments'] }}</div>
+            <div class="elem comments" title="{{ rec['comments'] }}">{{ rec['comments'] }}</div>
         </div>
         <div class="widget hint record_date">
             <select name="record_date_w" class="widget slidedown select_list">
@@ -70,7 +70,8 @@
         <div class="widget icon">
             <div class="add_proj_w" title="add new project"></div>
             <div class="dismiss_proj_w" title="remove project from the subject"></div>
-            <a class="update_sub_w" title="update the record" href="{{ url_for('subject.update',idr=rec['idr']) }}"></a>
+            <a class="update_sub_w" title="update the record" href="{{ url_for('subject.update',idr=rec['idr']) }}"
+               target="_blank"></a>
             <div class="collect_sub_w" title="add this subject to collections"></div>
         </div>
         <select name="addproj_w" class="widget slidedown select_list" size="5">

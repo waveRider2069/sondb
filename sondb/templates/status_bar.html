@@ -1,0 +1,14 @@
+{#    <link rel="stylesheet" type="text/css" href="../static/css/header_footer.css">#}
+{#    <link rel="stylesheet" type="text/css" href="../static/css/layout.css">#}
+{#    <link rel="stylesheet" type="text/css" href="../static/css/typography.css">#}
+    <section class="statusbar">
+        <div>
+            {% if status_params['log'] -%}<span>User ID: {{ status_params['user'] }}</span>{% endif -%}
+            {% if status_params['log'] and status_params['notindex'] -%}
+                <span><a href="{{ url_for('auth.index') }}">Home</a></span>{% endif -%}
+            {% if status_params['notregister'] -%}
+                <span><a href="{{ url_for('auth.register') }}">Register</a></span>{% endif -%}
+            {% if status_params['log'] -%}<span><a href="{{ url_for('auth.logout') }}">Log out</a></span>{% else -%}
+                <span><a href="{{ url_for('auth.login') }}">Log in</a></span>{% endif %}
+        </div>
+    </section>

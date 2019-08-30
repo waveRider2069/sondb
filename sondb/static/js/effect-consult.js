@@ -55,7 +55,7 @@ $(document).ready(function () {
                 data1 = data1 + '&' + $(this).attr("id") + "=" + $(this).text()
             }
         });
-        data1 = data1 + '&keys='+ encodeURIComponent(keys);
+        data1 = data1 + '&keys=' + encodeURIComponent(keys);
         console.log(data1);
         for (i in folders) {
             if (unfold[i]) {
@@ -117,5 +117,10 @@ $(document).ready(function () {
         location.href = path;
     });
 
+    $("form#searchBox").submit(function (event) {
+        event.preventDefault();
+        $("input.go[name=search_subject]").trigger("click")
+
+    })
 
 });

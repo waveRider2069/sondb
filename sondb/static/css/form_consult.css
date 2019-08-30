@@ -12,17 +12,17 @@ form#searchBox {
     /*margin-top: 25px;*/
 }
 
-#keywords::-moz-selection {
-    border-color: #199ED8;
-}
+/*#keywords::-moz-selection {*/
+    /*border-color: #199ED8;*/
+/*}*/
 
-#keywords::selection {
-    border-color: #199ED8;
-}
+/*#keywords::selection {*/
+    /*border-color: #199ED8;*/
+/*}*/
 
-#keywords:invalid {
-    border-color: #f30;
-}
+/*#keywords:invalid {*/
+    /*border-color: #f30;*/
+/*}*/
 
 
 /*Flex*/

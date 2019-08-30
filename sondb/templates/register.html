@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>register SSDB</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/register.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/header_footer.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/typography.css') }}">
+
+</head>
+
+<body>
+{% include 'status_bar.html' %}
+<div class="information infop">
+    <form action="{{ url_for('auth.register') }}" method="post" name="register" class="register">
+        <div>
+            <span> User ID </span>
+            <input type="text" name="usrid" maxlength="25" required>
+            <p class="hint">8~16 characters of a~z, A~Z, 0~9 or _, which starts only with letter. Case sensitive!</p>
+        </div>
+        <div>
+            <span>Password</span>
+            <input type="password" name="password" maxlength="25" required><br>
+            <p class="hint">8~20 characters of a~z, A~Z, 0~9 or _. Case sensitive!</p>
+
+        </div>
+        <div>
+            <span>Comfirm password</span>
+            <input type="password" name="password1" maxlength="25" required><br>
+            <p class="hint">Type in the same sequence as above</p>
+        </div>
+        <div>
+            <span>Invitation code</span>
+            <input type="text" name="invcode" maxlength="25" required><br>
+            <p class="hint">A character sequence obtained from the administrator. Case sensitive!</p>
+        </div>
+        <div class="button_reg">
+            <input class="submit" type="submit" name="register_submit" value="Register">
+        </div>
+        <p class="flash">
+            {% with messages=get_flashed_messages() -%}{% if messages -%}{% for message in messages -%}{{ message }}
+            {%- endfor %}
+            {% endif -%}{% endwith -%}</p>
+    </form>
+</div>
+</body>
+
+</html>

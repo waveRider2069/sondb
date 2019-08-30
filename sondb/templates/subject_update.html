@@ -16,6 +16,7 @@
 </head>
 
 <body>
+{% include 'status_bar.html' %}
 <header class="navigation">
     <nav class="main_menu">
         <a href="{{ url_for('consult.ready') }}" class="toConsult navhead">Consult</a>
@@ -35,10 +36,10 @@
     <div id="record_date">record date:
         <select name="record_date" class="select_list">
             {% for record in records %}
-                <option value="{{ record['idr'] }}" data-date="{{ record['date'] }}"
+                <option value="{{ record['idr'] }}" data-date="{{ record['rdate'] }}"
                         data-latest="{% if loop.first %}yes{% else %}no{% endif %}"
                         {% if record['idr'] == params['idr'] %} selected {% endif %}>
-                    &nbsp;&nbsp;{{ record['date'] }}&nbsp;&nbsp;
+                    &nbsp;&nbsp;{{ record['rdate'] }}&nbsp;&nbsp;
                 </option>
             {% endfor %}
         </select>
@@ -59,16 +60,16 @@
             <div class="part phone">
                 <div class="tag">Phone</div>
                 <div class="content">
-                    <input type="text" name="phone" class="type_in" value="{{ params['phone'] }}">
+                    <input type="text" name="phone" class="type_in" value="{{ params['phone'] }}" maxlength="60">
                 </div>
             </div>
             <div class="part gender">
                 <div class="tag">Gender</div>
                 <div class="content">
-                    {% for ops in ['male','female'] %}
-                        <input type="checkbox" class="single color_option" name="gender" value="{{ ops }}"
-                               id="{{ ops }}" {% if ops == params['gender'] %}checked{% endif %}>
-                        <label for="{{ ops }}">{{ ops }}</label>
+                    {% for ops in [['male','M'],['female','F']] %}
+                        <input type="checkbox" class="single color_option" name="gender" value="{{ ops[1] }}"
+                               id="{{ 'gender_' + ops[0] }}" {% if ops[1] == params['gender'] %}checked{% endif %}>
+                        <label for="{{ 'gender_' + ops[0] }}">{{ ops[0] }}</label>
                     {% endfor %}
                 </div>
             </div>
@@ -118,7 +119,7 @@
             <div class="part aidwearing">
                 <div class="tag">Hearing aid wearing</div>
                 <div class="content">
-                    {% for ops in [['notwear','not wearing'],['unilateral','unilateral'],['bilateral','bilateral']] %}
+                    {% for ops in [['neither','neither'],['eithor','eithor'],['unilateral','unilateral'],['bilateral','bilateral']] %}
                         <input type="checkbox" class="single color_option" name="aidwearing" value="{{ ops[1] }}"
                                id="{{ ops[0] }}" {% if ops[1] == params['aidwearing'] %}checked{% endif %}>
                         <label for="{{ ops[0] }}">{{ ops[1] }}</label>
@@ -146,10 +147,16 @@
                 <div class="part tests">
                     <div class="tag">Tests done</div>
                     <div class="content">
-                        {% for test in ['MHINT-24' ,'MHINT-12','CNSM','MSTM','PPT','others'] %}
-                            <input type="checkbox" class="multiple color_option" name="tests" value="{{ test | lower }}"
-                                   id="{{ test | lower }}" {% if test | lower in testlist %}checked{% endif %}>
-                            <label for="{{ test | lower }}">{{ test }}</label>
+                        {#                        {% for test in ['MHINT-24' ,'MHINT-12','CNSM','MSTM','PPT','others'] %}#}
+                        {#                            <input type="checkbox" class="multiple color_option" name="tests" value="{{ test | lower }}"#}
+                        {#                                   id="{{ test | lower }}" {% if test | lower in testlist %}checked{% endif %}>#}
+                        {#                            <label for="{{ test | lower }}" title="{{ test['description'] }}">{{ test }}</label>#}
+                        {#                        {% endfor %}#}
+                        {% for test in tests %}
+                            <input type="checkbox" class="multiple color_option" name="tests" value="{{ test['idt'] }}"
+                                   id="{{ test['idt'] }}" {% if test['ischeck'] %}checked{% endif %}>
+                            <label for="{{ test['idt'] }}"
+                                   title="{{ test['description'] }}">{{ test['name'] | upper }}</label>
                         {% endfor %}
                     </div>
                 </div>
@@ -158,7 +165,7 @@
                 {% for proj in projs %}
                     {% set projid=proj['idp'] %}
                     <div class="part proj" id="{{ projid }}">
-                        <div class="tag">{{ proj['abbr'] | capitalize }}</div>
+                        <div class="tag" title="{{ proj['title'] }}">{{ proj['abbr'] | capitalize }}</div>
                         <div class="content">
                             <div class="state">
                                 <input type="radio" class="single color_option" name="{{ 'finp' +projid }}" value="no"
@@ -183,7 +190,8 @@
                     <div class="content">
                         <select name="addproj" class="select_list" size="5">
                             {% for proja in projs_all %}
-                                <option value="{{ proja['idp'] }}">{{ proja['abbr'] }}</option>
+                                <option value="{{ proja['idp'] }}"
+                                        title="{{ proja['title'] }}">{{ proja['abbr'] }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -223,90 +231,86 @@
             <div class="part thresholds">
                 <div class="tag">Pure tone thresholds</div>
                 <div class="content">
-                    <div class="thresh_in">
+                    {% set freqs = namespace(f1=['125','250','500','750','1000','1500','2000','3000','4000','6000','8000'],f2=['.125','.25','.5','.75','1k','1.5k','2k','3k','4k','6k','8k']) %}
+                    <div class="pta_simple_ver">
                         <div class="canvas conduction">
                             <div class="air panel thresh">
                                 <div class="group right"><span class="hint">right</span>
                                     <div class="slides">
-                                        {% for freq in ['air_250r','air_500r','air_1000r','air_2000r','air_4000r','air_8000r'] %}
+                                        {% for freq in freqs.f1 %}
+                                            {% set field = 'air_'~freq~'r'  %}
                                             <div class="range oneh vertical">
-                                                <input name="{{ freq }}" type="range" min="-20" max="120"
-                                                       step="5"
-                                                       value="{% if params[freq] is not none %}{{ params[freq] }}{% else %}-20{% endif %}">
+                                                <input name="{{ field }}" type="range" min="-20" max="120"
+                                                       step="1" value="
+                                                        {%- if params[field] is not none -%}{{ params[field] }}{%- else -%}-20{%- endif -%}">
                                                 <div class="slide_prog"></div>
                                                 <div class="slide_handle"></div>
                                             </div>
                                         {% endfor %}
                                     </div>
                                     <div class="hint">
-                                        <div>250</div>
-                                        <div>500</div>
-                                        <div>1000</div>
-                                        <div>2000</div>
-                                        <div>4000</div>
-                                        <div>8000</div>
+                                        {%- for freq in freqs.f2 -%}
+                                            <div>{{ freq }}</div>
+                                        {%- endfor -%}
                                     </div>
                                 </div>
                                 <div class="group left"><span class="hint">left</span>
                                     <div class="slides">
-                                        {% for freq in ['air_250l','air_500l','air_1000l','air_2000l','air_4000l','air_8000l'] %}
+                                        {% for freq in freqs.f1 %}
+                                            {% set field = 'air_'~freq~'l'  %}
                                             <div class="range oneh vertical">
-                                                <input name="{{ freq }}" type="range" min="-20" max="120"
-                                                       step="5" value="{% if params[freq] is not none %}{{ params[freq] }}{% else %}-20{% endif %}">
+                                                <input name="{{ field }}" type="range" min="-20" max="120"
+                                                       step="1" value="
+                                                        {%- if params[field] is not none -%}{{ params[field] }}{%- else -%}-20{%- endif -%}">
                                                 <div class="slide_prog"></div>
                                                 <div class="slide_handle"></div>
                                             </div>
                                         {% endfor %}
                                     </div>
                                     <div class="hint">
-                                        <div>250</div>
-                                        <div>500</div>
-                                        <div>1000</div>
-                                        <div>2000</div>
-                                        <div>4000</div>
-                                        <div>8000</div>
+                                        {%- for freq in freqs.f2 -%}
+                                            <div>{{ freq }}</div>
+                                        {%- endfor -%}
                                     </div>
                                 </div>
                             </div>
                             <div class="bone panel thresh">
                                 <div class="group right"><span class="hint">right</span>
                                     <div class="slides">
-                                        {% for freq in ['bone_250r','bone_500r','bone_1000r','bone_2000r','bone_4000r','bone_8000r'] %}
+                                        {% for freq in freqs.f1 %}
+                                            {% set field = 'bone_'~freq~'r'  %}
                                             <div class="range oneh vertical">
-                                                <input name="{{ freq }}" type="range" min="-20" max="120"
-                                                       step="5" value="{% if params[freq] is not none %}{{ params[freq] }}{% else %}-20{% endif %}">
+                                                <input name="{{ field }}" type="range" min="-20" max="120"
+                                                       step="1" value="
+                                                        {%- if params[field] is not none -%}{{ params[field] }}{%- else -%}-20{%- endif -%}">
                                                 <div class="slide_prog"></div>
                                                 <div class="slide_handle"></div>
                                             </div>
                                         {% endfor %}
                                     </div>
                                     <div class="hint">
-                                        <div>250</div>
-                                        <div>500</div>
-                                        <div>1000</div>
-                                        <div>2000</div>
-                                        <div>4000</div>
-                                        <div>8000</div>
+                                        {%- for freq in freqs.f2 -%}
+                                            <div>{{ freq }}</div>
+                                        {%- endfor -%}
                                     </div>
                                 </div>
                                 <div class="group left"><span class="hint">left</span>
                                     <div class="slides">
-                                        {% for freq in ['bone_250l','bone_500l','bone_1000l','bone_2000l','bone_4000l','bone_8000l'] %}
+                                        {% for freq in freqs.f1 %}
+                                            {% set field = 'bone_'~freq~'l'  %}
                                             <div class="range oneh vertical">
-                                                <input name="{{ freq }}" type="range" min="-20" max="120"
-                                                       step="5" value="{% if params[freq] is not none %}{{ params[freq] }}{% else %}-20{% endif %}">
+                                                <input name="{{ field }}" type="range" min="-20" max="120"
+                                                       step="1" value="
+                                                        {%- if params[field] is not none -%}{{ params[field] }}{%- else -%}-20{%- endif -%}">
                                                 <div class="slide_prog"></div>
                                                 <div class="slide_handle"></div>
                                             </div>
                                         {% endfor %}
                                     </div>
                                     <div class="hint">
-                                        <div>250</div>
-                                        <div>500</div>
-                                        <div>1000</div>
-                                        <div>2000</div>
-                                        <div>4000</div>
-                                        <div>8000</div>
+                                        {%- for freq in freqs.f2 -%}
+                                            <div>{{ freq }}</div>
+                                        {%- endfor -%}
                                     </div>
                                 </div>
                             </div>
@@ -318,17 +322,6 @@
                             <label class="switch" for="bone">bone conduction</label>
                         </div>
                     </div>
-{#                    <div class="go">#}
-{#                        <input class="go" type="button" onclick="" value="Plot audiogram">#}
-{#                    </div>#}
-{#                    <div class="thresh_plot">#}
-{#                        <div class="canvas">#}
-{#                            <canvas class="d2018-12-21 right">#}
-{#                            </canvas>#}
-{#                            <canvas class="d2018-12-21 left">#}
-{#                            </canvas>#}
-{#                        </div>#}
-{#                    </div>#}
                 </div>
             </div>
             <div class="part category">
@@ -476,12 +469,27 @@
         <div class="cond">
             <div class="part comments">
                 <div class="content">
-                    <textarea name="comments" class="type_in" maxlength="250"
+                    <textarea name="comments" class="type_in" maxlength="1000"
                               placeholder="--Note down any other information you think important in here--">{{ params['comments'] }}</textarea>
                 </div>
             </div>
         </div>
     </form>
+    <!--  <form id="updateForm" class="field tosubmit unfolded">
+         <div class="cond">
+             <div class="part update_choice">
+                 <div class="content">
+                         Do you want to update this record by
+                         <input type="radio" class="color_option" name="update_choice" value="new"
+                                id="update_choice_new" checked >
+                         <label for="update_choice_new">creating a new one</label> or
+                         <input type="radio" class="color_option" name="update_choice" value="overwrite"
+                                id="update_choice_overwrite">
+                         <label for="update_choice_overwrite">overwriting it</label> ?
+                 </div>
+             </div>
+         </div>
+     </form> -->
     <div class="go line">
         <hr>
         <input class="go" name="update_subject" type="button" value="Update">
@@ -492,9 +500,7 @@
 <script src="{{ url_for('static',filename='js/slide_bar.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static',filename='js/effect.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static',filename='js/effect-canvas.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static',filename='js/audiogram_canvas.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static',filename='js/effect-subject.js') }}" type="text/javascript"></script>
-</body>
 </body>
 
 </html>

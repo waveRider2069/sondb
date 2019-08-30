@@ -16,6 +16,7 @@
 </head>
 
 <body>
+{% include 'status_bar.html' %}
 <header class="navigation">
     <nav class="main_menu">
         <a href="{{ url_for('consult.ready') }}" class="toConsult navhead">Consult</a>
@@ -74,22 +75,22 @@
                 <tr class="added">
                     <td class="title"><a
                             href="{{ url_for('projects.view_single',idp=params['idp'],page_state=pstate) }}"
-                            class="elem_linkage">{{ params['abbr'] }}</a></td>
+                            class="elem_linkage" title="{{ params['title'] }}">{{ params['abbr'] }}</a></td>
                     <td class="leader">{{ params['leader'] }}</td>
                     <td class="start">{{ params['start'] }}</td>
                     <td class="dueto_end">{{ params['endt'] }}</td>
-                    {% if 'in progress' ==  params['pstate']|lower or 'in_progress' ==  params['pstate']|lower %}
+                    {% if 'in progress' ==  params['state']|lower or 'in_progress' ==  params['state']|lower %}
                         {% set statecolor = 'blue' %}
-                    {% elif 'delayed' ==  params['pstate']|lower %}
+                    {% elif 'delayed' ==  params['state']|lower %}
                         {% set statecolor = 'red' %}
                     {% else %}
                         {% set statecolor = 'yellow' %}
                     {% endif %}
-                    <td class="state"><span class="{{ statecolor }}">{{ params['pstate'] }}</span></td>
-                    <td class="subjectN"><span class="subjectN1">None</span> / <span
+                    <td class="state"><span class="{{ statecolor }}">{{ params['state'] }}</span></td>
+                    <td class="subjectN"><span class="subjectN1">{{ params['totaln'] }}</span> / <span
                             class="subjectN2">{{ params['subjectn'] }}</span></td>
-                    <td class="finance"><span class="finance1">None</span> / <span
-                            class="finance2">{{ params['budget'] }}</span>
+                    <td class="finance"><span class="finance1">{{ params['totalp'] }}</span> / <span
+                            class="finance2">{{ params['budget'] | format}}</span>
                     </td>
                 </tr>
             {% endfor %}

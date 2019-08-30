@@ -1,0 +1,64 @@
+
+p.hint{
+    font-size: 13px;
+    font-style: italic;
+    color: #949494;
+    margin-top: 0;
+    margin-left: 190px;
+
+}
+form.register{
+    /*border: red solid 1px;*/
+    /*padding: 20px;*/
+    width: 600px;
+    margin: 150px auto;
+}
+
+form.register div{
+    margin-bottom: 25px;
+}
+form.register div.button_reg{
+    border: white solid 1px;
+    margin-top: 15px;
+
+}
+form.register  span{
+    display: inline-block;
+    width: 180px;
+    text-align: right;
+    margin-right: 20px;
+    margin-left: -20px;
+}
+
+input[type='text'], input[type='password']{
+    height: 25px;
+    padding-left: 10px;
+    border: 1px solid #949494;
+}
+
+
+input[name='register_submit']{
+    /*margin-top: 12px;*/
+    display: block;
+    margin: 17px auto;
+    border: 1px solid #333333;
+    padding: 1px 10px;
+    border-radius: 5px;
+    color: #333333;
+    outline: none;
+     /*transition: transform 0.3s;*/
+    cursor: pointer;
+}
+
+input[name='register_submit']:active{
+    /*background-color: #199ED8;*/
+    color: #199ED8;
+    border-color: #199ED8 ;
+}
+
+
+form p.flash {
+    display: block;
+    margin: 15px auto;
+    text-align: center;
+}

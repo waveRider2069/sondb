@@ -17,12 +17,13 @@
                   y2="{{ (var.startp - 2 + le*7) | string ~ '%' }}"
                   stroke="#ccc" stroke-width="1"></line>
         {% endfor %}
-        <text x="55%" y="0%" text-anchor="middle" fill="{{ var.color }}" style="font-size: 16px">{{ var.title | upper }}</text>
+        <text x="55%" y="0%" text-anchor="middle" fill="{{ var.color }}"
+              style="font-size: 16px">{{ var.title | upper }}</text>
         {% for freq in [0.125,0.25,0.5,1,2,4,8] %}
             <text y="100%" x="{{ (10 + 14*(freq/0.125)| log2) | string ~ '%' }}" text-anchor="middle">{{ freq }}</text>
         {% endfor %}
         {% set var.points='' %}
-        {% for freq in ['125','250','500','1000','2000','3000','4000','6000','8000'] %}
+        {% for freq in ['125','250','500','750','1000','1500','2000','3000','4000','6000','8000'] %}
             {% set var.curfreq = 'air_'~freq~var.sx %}
             {% if var.curfreq in record and record[var.curfreq] is not none %}
                 {% set var.x=((10 + 14*((freq|int)/125)| log2) /100*width)| int %}
@@ -38,13 +39,15 @@
                     <circle cx="{{ var.x }}" cy="{{ var.y }}" r="{{ var.circ }}" fill="none" stroke="{{ var.color }}"
                             stroke-width="2"></circle>
                 {% endif %}
-
+                <text y="{{ var.y + 22 }}" x="{{ (10 + 14*(freq|int/125)| log2) | string ~ '%' }}" text-anchor="middle"
+                      fill="{{ var.color }}" fill-opacity="1">{{ record[var.curfreq] }}</text>
                 {% set var.points = var.points~var.x|string~','~var.y|string~' ' %}
             {% endif %}
-            <polyline points="{{ var.points }}" stroke-width="2" stroke="{{ var.color }}" fill="none"></polyline>
         {% endfor %}
+        <polyline points="{{ var.points }}" stroke-width="2" stroke="{{ var.color }}" fill="none"></polyline>
+
         {% set var.points='' %}
-        {% for freq in ['125','250','500','1000','2000','3000','4000','6000','8000'] %}
+        {% for freq in ['125','250','500','750','1000','1500','2000','3000','4000','6000','8000'] %}
             {% set var.curfreq = 'bone_'~freq~var.sx %}
             {% if var.curfreq in record and record[var.curfreq] is not none %}
                 {% set var.x=((10 + 14*((freq|int)/125)| log2) /100*width)| int %}
@@ -64,12 +67,14 @@
                           y2="{{ var.y + var.arrow }}"
                           fill="none" stroke="{{ var.color }}" stroke-width="2"></line>
                 {% endif %}
+                <text y="{{ var.y - 15 }}" x="{{ (10 + 14*(freq|int/125)| log2) | string ~ '%' }}" text-anchor="middle"
+                      fill="{{ var.color }}" fill-opacity="0.5">{{ record[var.curfreq] }}</text>
                 {% set var.points = var.points~var.x|string~','~var.y|string~' ' %}
             {% endif %}
-            <polyline points="{{ var.points }}" stroke-width="2" stroke="{{ var.color }}" fill="none"
-                      stroke-dasharray="10,10"></polyline>
-        {% endfor %}
 
+        {% endfor %}
+        <polyline points="{{ var.points }}" stroke-width="2" stroke="{{ var.color }}" fill="none"
+                  stroke-dasharray="10,10"></polyline>
     </svg>
 {% endmacro %}
 

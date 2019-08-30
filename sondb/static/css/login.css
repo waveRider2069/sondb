@@ -50,17 +50,18 @@ form input {
     padding: 3px 10px;
 }
 
+form p.flash {
+    display: block;
+    margin: 7% auto;
+    text-align: center;
+}
+
 .submit {
-    margin-top: 17%;
+    margin-top: 15%;
     margin-left: 28%;
     width: 30%;
 }
 
-.submit1 {
-    margin-top: 0%;
-    margin-left: 28%;
-    width: 30%;
-}
 
 .menu a {
     /*border: 1px solid #CCC;*/

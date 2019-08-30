@@ -7,11 +7,12 @@ import mysql.connector as sqlconnector
 
 def conn_db():
     if 'conn' not in g:
-        # g.db = sqlite3.connect(current_app.config['DATABASE'], detect_types=sqlite3.PARSE_DECLTYPES)
         g.conn = sqlconnector.connect(user='shaun', password='amituofo8945', database='ssdb',
                                       sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION')
-        # g.db.row_factory = sqlite3.Row
     return g.conn
+
+# conn = sqlconnector.connect(user='shaun', password='amituofo8945', database='ssdb',
+#                                       sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION')
 
 
 def close_db(error=None):

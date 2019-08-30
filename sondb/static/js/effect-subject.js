@@ -24,7 +24,6 @@ $(document).ready(function () {
     });
     //delete subject
 
-
     //update subject
     $("input.go[name=update_subject]").click(function () {
         var personalForm = $("form#personalForm").serialize();
@@ -45,7 +44,6 @@ $(document).ready(function () {
             data: data1,
             success: function (resp) {
                 location.href = '/subject/view/' + resp;
-                // location.href = '/subject/view/' + resp;
             },
             error: function (xhr) {
                 if (xhr.status == 400) {
@@ -63,6 +61,14 @@ $(document).ready(function () {
     })
 
 
+    // Delete record
+    $("a.del_record").click(function () {
+        var r = confirm("Are you sure to delete the record?");
+        if (r) {
+            // data-href
+            location.href = $(this).attr("data-href");
+        }
+    })
 
 
 });

@@ -16,6 +16,7 @@
 </head>
 
 <body>
+{% include 'status_bar.html' %}
 <header class="navigation">
     <nav class="main_menu">
         <a href="{{ url_for('consult.ready') }}" class="toConsult navhead">Consult</a>
@@ -35,14 +36,16 @@
             <select name="record_date" class="select_list">
                 {% for record in records %}
                     <option value="{{ record['idr'] }}" {% if record['idr'] == params['idr'] %}
-                            selected {% endif %}>&nbsp;&nbsp;{{ record['date'] }}&nbsp;&nbsp;
+                            selected {% endif %}>&nbsp;&nbsp;{{ record['rdate'] }}&nbsp;&nbsp;
                     </option>
                 {% endfor %}
             </select>
         </div>
         <a class="update_sub" title="Update the record"
            href="{{ url_for('subject.update',idr=params['idr']) }}"></a>
-        <a class="del_record" title="Delete the record" id="{{ params['idr'] }}"></a>
+        <a class="del_record" title="Delete the record" data-id="{{ params['idr'] }}"
+           data-href="{{ url_for('subject.delete',idr=params['idr']) }}"></a>
+        {% if status_params.get('notify_delete') %} Successfully delete the record of {{ status_params.get('notify_delete') }}{% endif %}
     </div>
     <div name="generalForm" class="unfold line">
         <div>General Information</div>
@@ -62,7 +65,8 @@
                     {{ params[cond] | capitalize }}{% endif %}</div>
             {% endfor %}
             <div><span class="hint">spare time: </span><span
-                    class="spare">{% if params['spare'] %}{{ params['spare'] | capitalize }}{% endif %}&nbsp</span><span
+                    class="spare">{% if params['spare'] %}
+                {{ params['spare'] | capitalize }}{% endif %}&nbsp;</span><span
                     class="sparenote">{% if params['sparenote'] %}({{ params['sparenote'] }}){% endif %}</span></div>
         </div>
         <div class="part">
@@ -72,27 +76,31 @@
         </div>
         <div class="part">
             <div><span class="hint">right ear: </span>
-                <span>{% if params['air_avgr'] is not none %}
-                    {{ params['air_avgr']  | round | int | string +'/' }}{% else %}
-                    {{ '(air)/' }}{% endif -%}
-                    {% if params['bone_avgr'] %}{{ params['bone_avgr']  | int | int | string +'dB' }}{% else %}
-                        {{ '(bone)dB' }}{% endif %}</span>
-                <span>{% if params['air_levelr'] %}{{ params['air_levelr']  | capitalize }}{% endif %}</span>
-                <span>{% if params['cause_right'] %}{{ params['cause_right']  | capitalize }}{% endif %}</span>
-                <span>{% if params['shape_right'] %}{{ params['shape_right']  | capitalize }}{% endif %}</span>
+                <span>{% if params['air_avgr'] is not none -%}
+                    {{ params['air_avgr']  | round | int | string }}{% else %}{{ '_' }}{% endif -%}{{ '(a)/' }}
+                    {%- if params['bone_avgr'] is not none -%}
+                        {{ params['bone_avgr']  | round |int| string }}{% else %}{{ '_' }}{% endif %}{{ '(b)dB' }}&nbsp;&nbsp;</span>
+                <span>{% if params['air_levelr'] %}
+                    {{ params['air_levelr']  | capitalize }}{% endif %}&nbsp;&nbsp;</span>
+                <span>{% if params['cause_right'] %}
+                    {{ params['cause_right']  | capitalize }}{% endif %}&nbsp;&nbsp;</span>
+                <span>{% if params['shape_right'] %}
+                    {{ params['shape_right']  | capitalize }}{% endif %}&nbsp;&nbsp;</span>
                 <span>{% if params['immittance_right'] and params['immittance_right']!='A' -%}
                     {{ params['immittance_right']  | capitalize }}{% endif %}</span></div>
         </div>
         <div class="part">
             <div><span class="hint">left ear: </span>
-                <span>{% if params['air_avgl'] is not none %}
-                    {{ params['air_avgl']  | round | int | string +'/' }}{% else %}
-                    {{ '(air)/' }}{% endif -%}
-                    {% if params['bone_avgl'] %}{{ params['bone_avgl']  | int | int | string +'dB' }}{% else %}
-                        {{ '(bone)dB' }}{% endif %}</span>
-                <span>{% if params['air_levell'] %}{{ params['air_levell']  | capitalize }}{% endif %}</span>
-                <span>{% if params['cause_left'] %}{{ params['cause_left']  | capitalize }}{% endif %}</span>
-                <span>{% if params['shape_left'] %}{{ params['shape_left']  | capitalize }}{% endif %}</span>
+                <span>{% if params['air_avgl'] is not none -%}
+                    {{ params['air_avgl']  | round | int | string }}{% else %}{{ '_' }}{% endif -%}{{ '(a)/' }}
+                    {%- if params['bone_avgl'] is not none -%}
+                        {{ params['bone_avgl']  | round |int| string }}{% else %}{{ '_' }}{% endif %}{{ '(b)dB' }}&nbsp;&nbsp;</span>
+                <span>{% if params['air_levell'] %}
+                    {{ params['air_levell']  | capitalize }}{% endif %}&nbsp;&nbsp;</span>
+                <span>{% if params['cause_left'] %}
+                    {{ params['cause_left']  | capitalize }}{% endif %}&nbsp;&nbsp;</span>
+                <span>{% if params['shape_left'] %}
+                    {{ params['shape_left']  | capitalize }}{% endif %}&nbsp;&nbsp;</span>
                 <span>{% if params['immittance_left'] and params['immittance_left']!='A' -%}
                     {{ params['immittance_left']  | capitalize }}{% endif %}</span></div>
         </div>
@@ -116,7 +124,7 @@
             <div class="canvas history">
                 {% from 'audiogram.html' import audiogram with context %}
                 {% for record in records %}
-                    <div class="{% if params['rdate'] == record['date'] %}current{% endif %} d{{ record['date'] }} panel panel_bi">
+                    <div class="{% if params['rdate'] == record['rdate'] %}current{% endif %} d{{ record['rdate'] }} panel panel_bi">
                         {{ audiogram(record,2,368,266) }}
                         {{ audiogram(record,1,368,266) }}
                     </div>
@@ -124,9 +132,9 @@
             </div>
             <div class="switch_group">
                 {% for record in records %}
-                    <input class="{% if params['rdate'] == record['date'] %}current{% endif %} switch" type="radio"
-                           value="{{ record['date'] }}" name="history" id="d{{ record['date'] }}">
-                    <label class="switch" for="d{{ record['date'] }}">{{ record['date'] }}</label>
+                    <input class="{% if params['rdate'] == record['rdate'] %}current{% endif %} switch" type="radio"
+                           value="{{ record['rdate'] }}" name="history" id="d{{ record['rdate'] }}">
+                    <label class="switch" for="d{{ record['rdate'] }}">{{ record['rdate'] }}</label>
                 {% endfor %}
             </div>
         </div>
@@ -140,7 +148,8 @@
         {% for proj in projs %}
             <div class="part proj">
                 <div class="tag">
-                    <a href="{{ url_for('projects.view_single',idp=proj['idp']) }}">{{ proj['abbr'] | capitalize }}</a>
+                    <a href="{{ url_for('projects.view_single',idp=proj['idp']) }}"
+                       title="{{ proj['title'] }}">{{ proj['abbr'] | capitalize }}</a>
                 </div>
                 <div class="state">{% if proj['isfinish']=='yes' %}Finished{% else %}Unfinished{% endif %}</div>
                 <div class="pay"><span>Pay</span><span>{{ proj['pay'] }}</span></div>
@@ -164,7 +173,7 @@
     <form id="testsForm" class="field tosubmit unfolded">
         <div class="part tests">
             {% for test in tests %}
-                <div>{{ test['name'] | upper }}</div>
+                <div title="{{ test['description'] }}">{{ test['name'] | upper }}</div>
             {% endfor %}
         </div>
     </form>
@@ -173,7 +182,6 @@
 <script src="{{ url_for('static',filename='js/effect.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static',filename='js/effect-canvas.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static',filename='js/effect-subject.js') }}" type="text/javascript"></script>
-</body>
 </body>
 
 </html>

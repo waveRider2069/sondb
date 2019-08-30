@@ -12,7 +12,12 @@ bp = Blueprint('consult', __name__, url_prefix='/consult')
 @bp.route('/')
 @login_required
 def ready():
-    return render_template('consult_1.html')
+    conn = conn_db()
+    cur = conn.cursor(buffered=True, dictionary=True)
+    cur.execute("select idt, test_name name, test_desc description,priority from tests order by priority, name")
+    tests = cur.fetchall()
+    status_params = {'log': 1, 'notindex': 1, 'notregister': 1, 'user': g.user}
+    return render_template('consult_1.html', tests=tests, status_params=status_params)
 
 
 @bp.route('/search', methods=['GET', 'POST'])
@@ -29,13 +34,10 @@ def search():
     cur = conn.cursor()
     # if tests tage
     if params['tests']:
-        # cur.execute(f"create temporary table t_tags (select * from (select idr from tests_tag where "
-        #             f"find_in_set(tname, '{','.join(params['tests'])}')>0) raw group by idr having "
-        #             f"count(*)={len(params['tests'])})")
         cur.execute(f"create temporary table t_tags (select idr from tests_tag where "
-                    f"find_in_set(tname, '{','.join(params['tests'])}')>0)")
+                    f"find_in_set(idt, '{params['teststr']}')>0)")
     else:
-        cur.execute("create temporary table t_tags (select 'all')")
+        cur.execute("create temporary table t_tags (select 'all_tests_123')")
     # sort
     sort = request.args.get('sort')
     if sort and sort in ['2', '3', '4']:
@@ -43,50 +45,48 @@ def search():
     else:
         params['sort'] = '1'
     # call search procedure
-    cur.callproc('search_subs', (
-        params['sort'], params['key_str'], params['level'], params['cause'], params['shape'], params['symmetry'],
-        params['speech'],
-        params['gender'], params['attitude'], params['location'], params['spare'], params['teststr'], params['ageDw'],
-        params['ageUp'], params['f250aUp'], params['f500aUp'], params['f1000aUp'], params['f2000aUp'],
-        params['f4000aUp'],
-        params['f8000aUp'], params['f250bUp'], params['f500bUp'], params['f1000bUp'], params['f2000bUp'],
-        params['f4000bUp'], params['f8000bUp'], params['f250aDw'], params['f500aDw'], params['f1000aDw'],
-        params['f2000aDw'], params['f4000aDw'], params['f8000aDw'], params['f250bDw'], params['f500bDw'],
-        params['f1000bDw'], params['f2000bDw'], params['f4000bDw'], params['f8000bDw']))
+    # print(params['gender'], params['gender_lst'])
+    cur.callproc('search_subs', (int((params['page']-1)*boxes), boxes,
+        g.user, params['sort'], params['key_str'], params['level'], params['cause'], params['shape'],
+        params['symmetry'],
+        params['speech'], params['gender'], params['attitude'], params['location'], params['spare'], params['teststr'],
+        params['ageDw'], params['ageUp'], params['f250aUp'], params['f500aUp'], params['f1000aUp'], params['f2000aUp'],
+        params['f4000aUp'], params['f8000aUp'], params['f250bUp'], params['f500bUp'], params['f1000bUp'],
+        params['f2000bUp'], params['f4000bUp'], params['f8000bUp'], params['f250aDw'], params['f500aDw'],
+        params['f1000aDw'], params['f2000aDw'], params['f4000aDw'], params['f8000aDw'], params['f250bDw'],
+        params['f500bDw'], params['f1000bDw'], params['f2000bDw'], params['f4000bDw'], params['f8000bDw']))
     reclist, curlist, projs = list(), list(), list()
     # print(params)
     # records information
     for se in cur.stored_results():
         keys = se.column_names
-        for vals in se:
-            sub = dict(zip(keys, vals))
-            sub['idrs'] = sub.get('idrs').split(',')
-            sub['rdates'] = sub.get('rdates').split(',')
-            if sub.get('idps'):
-                sub['idps'] = sub.get('idps').split(',')
-                sub['abbrs'] = sub.get('abbrs').split(',')
-            else:
-                sub['idps'] = []
-                sub['abbrs'] = []
-            reclist.append(sub)
-    # print(reclist)
-    # total results number, pages, and range
-    params['results'] = len(reclist)
-    params['pages'] = int((params['results'] + boxes - 1) / boxes)
+        if len(keys) <= 1:  # get results number
+            for r in se:
+                params['results'] = r[0]
+                params['pages'] = int((params['results'] + boxes - 1) / boxes)
+        else:
+            for vals in se:
+                sub = dict(zip(keys, vals))
+                sub['idrs'] = sub.get('idrs').split(',')
+                sub['rdates'] = sub.get('rdates').split(',')
+                if sub.get('idps'):
+                    sub['idps'] = sub.get('idps').split(',')
+                    sub['abbrs'] = sub.get('abbrs').split(',')
+                else:
+                    sub['idps'] = []
+                    sub['abbrs'] = []
+                reclist.append(sub)
     if params['results'] > 0:
-        if params['pages'] < params['page']:
-            params['page'] = params['pages']
-        curlist = reclist[(params['page'] - 1) * boxes:boxes * params['page']]
-        # #     projects infomation
-        # cur = conn.cursor(dictionary=True, buffered=True)
-        # cur.execute(f"select * from projs_search where idr in {tuple(map(lambda rl: rl['idr'], curlist))}")
-        # for proj in cur:
-        #     projdict[proj['idr']] = {'idps': proj.get('idps').split(','), 'abbrs': proj.get('abbrs').split(',')}
         cur.execute("select idp, abbr from projects")
         projs = cur.fetchall()
+    cur = conn.cursor(buffered=True, dictionary=True)
+    cur.execute("select idt, test_name name, test_desc description,priority from tests order by priority, name")
+    tests = cur.fetchall()
     cur.execute("drop table if exists t_tags")
     cur.execute("drop table if exists subs_search")
-    return render_template('consult_res.html', reclist=curlist, params=params, projs=projs)
+    status_params = {'log': 1, 'notindex': 1, 'notregister': 1, 'user': g.user}
+    return render_template('consult_res.html', reclist=reclist, params=params, projs=projs, tests=tests,
+                           status_params=status_params)
 
 
 @bp.route('/switch')
@@ -123,11 +123,14 @@ def get_params():
             params[item] = int(request.args.get(item))
         except TypeError or ValueError:
             params[item] = None
-    keylist = request.args.get('keys').strip().split(' ')
-    while '' in keylist:
-        keylist.remove('')
-    # params['keys'] = keylist
-    params['key_str'] = ' '.join(keylist)
+    request_keys = request.args.get('keys')
+    if not isinstance(request_keys, str):
+        params['key_str'] = ''
+    else:
+        keylist = request_keys.strip().split(' ')
+        while '' in keylist:
+            keylist.remove('')
+        params['key_str'] = ' '.join(keylist)
     # params['key_str'] = request.args.get('keys').strip()
     # print(params['key_str'])
     return params
@@ -144,3 +147,4 @@ def get_params():
 
 
 # "select ss.*,proj.abbr from (select srec.*,sproj.idp_proj idp from (select ids_rec ids, idr,group_concat(idr) idrs, subname,age,attitude,gender,location,spare from sub_records group by ids_rec) srec join sub_projects sproj on srec.idr=sproj.idr_proj) ss join projects proj on proj.idp = ss.idp;"
+# call search_subs(0, 20, 'SonovaRD', '1', '', '', '', '', '', '', '', '', '', '', '', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);

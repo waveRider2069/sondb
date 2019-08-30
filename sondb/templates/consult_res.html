@@ -19,6 +19,7 @@
 </head>
 
 <body>
+{% include 'status_bar.html' %}
 <header class="navigation">
     <nav class="main_menu">
         <a href="{{ url_for('consult.ready') }}" class="toConsult curModule navhead">Consult</a>
@@ -34,7 +35,7 @@
 </header>
 <section class="conditions">
     <form id="searchBox" class="tosubmit">
-        <input list='search_hist' class="type_in" type="search" id="keywords" name="keywords" maxlength="60"
+        <input class="type_in" type="search" id="keywords" name="keywords" maxlength="60"
                title="Separate multiple words with space for combined search" placeholder="key words"
                value="{{ params['key_str'] }}">
     </form>
@@ -169,9 +170,9 @@
             <div class="part gender">
                 <div class="tag">Gender</div>
                 <div class="content">
-                    {% for nam in ['male','female'] %}
-                        <input type="checkbox" class="color_option" name="gender" value="{{ nam }}"
-                               id="gen_{{ nam }}" {% if nam in params['gender_lst'] %}checked{% endif %}>
+                    {% for nam,val in {'male':'M','female':'F'}.items() %}
+                        <input type="checkbox" class="color_option" name="gender" value="{{ val }}"
+                               id="gen_{{ nam }}" {% if val in params['gender_lst'] %}checked{% endif %}>
                         <label for="gen_{{ nam }}">{{ nam }}</label>
                     {% endfor %}
                 </div>
@@ -220,11 +221,16 @@
             <div class="part tests">
                 <div class="tag">Tests done</div>
                 <div class="content">
-                    {% for nam,val in {'MHINT-24':'mhint-24','MHINT-12':'mhint-12','CNSM':'cnsm','MSTM':'mstm','PPT':'ppt','others':'others'}.items() %}
-                        <input type="checkbox" class="color_option" name="tests" value="{{ val }}"
-                               id="tst_{{ val }}" {% if val in params['tests'] %}checked{% endif %}>
-                        <label for="tst_{{ val }}">{{ nam }}</label>
+                    {% for test in tests %}
+                        <input type="checkbox" class="color_option" name="tests" value="{{ test['idt'] }}"
+                               id="{{ test['idt'] }}" {% if test['idt'] in params['tests'] %}checked{% endif %}>
+                        <label for="{{ test['idt'] }}" title="{{ test['description'] }}">{{ test['name'] | upper}}</label>
                     {% endfor %}
+{#                    {% for nam,val in {'MHINT-24':'mhint-24','MHINT-12':'mhint-12','CNSM':'cnsm','MSTM':'mstm','PPT':'ppt','others':'others'}.items() %}#}
+{#                        <input type="checkbox" class="color_option" name="tests" value="{{ val }}"#}
+{#                               id="tst_{{ val }}" {% if val in params['tests'] %}checked{% endif %}>#}
+{#                        <label for="tst_{{ val }}">{{ nam }}</label>#}
+{#                    {% endfor %}#}
                 </div>
             </div>
         </div>
@@ -241,7 +247,7 @@
          data-pages="{{ params['pages'] }}" data-page="{{ params['page'] }}">
     {% if params['results']>0 %}
         <form class="sort">
-            <span class="tag">Sort in:</span>
+            <span class="tag">Sort by:</span>
             <input type="radio" class="load single color_option" name="sort" value="1" id="sort_latest"
                    {% if params['sort'] not in ['2','3','4'] %}checked{% endif %}>
             <label for="sort_latest">latest</label>
