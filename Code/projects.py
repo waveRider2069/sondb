@@ -192,8 +192,8 @@ def create():
             params['leader'] = request.form.get('leader').strip()
             params['start_time'] = request.form.get('start_time')
             params['dueto_end'] = request.form.get('dueto_end')
-            start = date.fromisoformat(params['start_time'])
-            endby = date.fromisoformat(params['dueto_end'])
+            start = datetime.strptime(params['start_time'], '%Y-%m-%d').date()
+            endby = datetime.strptime(params['dueto_end'], '%Y-%m-%d').date()
             if start >= endby:
                 return 'Error: Ending time precedes starting time'
             params['state'] = 'in progress'
@@ -236,8 +236,8 @@ def modify(idp):
             params['start_time'] = request.form.get('start_time')
             params['dueto_end'] = request.form.get('dueto_end')
             params['state'] = request.form.get('state')
-            start = date.fromisoformat(params['start_time'])
-            endby = date.fromisoformat(params['dueto_end'])
+            start = datetime.strptime(params['start_time'], '%Y-%m-%d').date()
+            endby = datetime.strptime(params['dueto_end'], '%Y-%m-%d').date()
             if start >= endby:
                 return 'Error: Ending time precedes starting time'
             params['budget'] = request.form.get('budget') or 0
