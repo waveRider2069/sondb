@@ -57,11 +57,15 @@ form.field .part>div {
     margin-right: 40px;
 }
 
-div.comments,
-div.diseases {
-    width: 80%;
-}
+/*div.comments,*/
+/*div.diseases {*/
+/*    width: 80%;*/
+/*}*/
 
+span.comments{
+    white-space: pre-line;
+    /*white-space: pre;*!*/
+}
 
 
 div.proj .tag,

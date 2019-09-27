@@ -162,7 +162,8 @@ def modify(idr):
         conn = conn_db()
         cur = conn.cursor()
         user = g.user
-        record_date = date.fromisoformat(request.form.get('record_date'))
+        # record_date = date.fromisoformat(request.form.get('record_date'))
+        record_date = datetime.strptime(request.form.get('record_date'), '%Y-%m-%d').date()
         is_latest = str(request.form.get('is_latest'))
         # load existing subject ID
         cur.execute("select ids_rec as ids from sub_records where binary idu_rec=%s and idr=%s", (user, idr))
@@ -309,6 +310,7 @@ def newOrupdate(user, idr, ids, mode='n'):
         params['record_time'] = cur_time
     params['update_time'] = cur_time
     params['subname'] = request.form.get('subname').strip()
+    print(params['subname'])
     # if empty name
     if not params['subname']:
         abort(400)

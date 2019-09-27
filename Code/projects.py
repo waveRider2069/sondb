@@ -71,7 +71,7 @@ def search_subs_proj(idp):
     except:
         params['page'] = 1
     # 20 box per page
-    boxes = 20
+    boxes = 100
     conn = conn_db()
     cur = conn.cursor()
     # sort

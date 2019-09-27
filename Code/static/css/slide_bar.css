@@ -71,6 +71,7 @@
 
  .range input[type="range"]::-webkit-slider-thumb {
      -webkit-appearance: none;
+     -moz-appearance: none;
      appearance: none;
      background-color: transparent;
      /*border: 1px solid #ccc;*/
@@ -79,7 +80,6 @@
      cursor: pointer;
      transition: 0.3s ease-in-out;
      z-index: 1;
-
  }
 
 
