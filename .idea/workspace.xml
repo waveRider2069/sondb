@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d344685e-1544-46bc-988c-1a9b53201a79" name="Default Changelist" comment="Update workspace.xml">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sondb.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sondb.iml" afterDir="false" />
+    <list default="true" id="d344685e-1544-46bc-988c-1a9b53201a79" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/projects.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/projects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/static/css/form_subject_view.css" beforeDir="false" afterPath="$PROJECT_DIR$/Code/static/css/form_subject_view.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/static/css/slide_bar.css" beforeDir="false" afterPath="$PROJECT_DIR$/Code/static/css/slide_bar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/subject.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code/subject.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +100,7 @@
       <workItem from="1569297884833" duration="1230000" />
       <workItem from="1569408831762" duration="748000" />
       <workItem from="1569464083477" duration="1037000" />
-      <workItem from="1569544111109" duration="2140000" />
+      <workItem from="1569544111109" duration="3154000" />
     </task>
     <task id="LOCAL-00001" summary="Update workspace.xml">
       <created>1569288410813</created>
@@ -116,11 +109,28 @@
       <option name="project" value="LOCAL" />
       <updated>1569288410813</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="update and change to branch pg">
+      <created>1569546770413</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1569546770413</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -137,6 +147,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Update workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update workspace.xml" />
+    <MESSAGE value="update and change to branch pg" />
+    <option name="LAST_COMMIT_MESSAGE" value="update and change to branch pg" />
   </component>
 </project>
