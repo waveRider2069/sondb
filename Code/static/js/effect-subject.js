@@ -57,7 +57,7 @@ $(document).ready(function () {
     // switch recored
     $("select[name=record_date]").change(function () {
         var old_href = location.href;
-        location.href = old_href.replace(/\/R[a-z,0-9]{12}/, "/" + $(this).val());
+        location.href = old_href.replace(/\/R[a-z,0-9]+/, "/" + $(this).val());
     })
 
 

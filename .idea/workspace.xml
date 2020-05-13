@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d344685e-1544-46bc-988c-1a9b53201a79" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/static/js/effect-subject.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/static/js/effect-subject.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/templates/subject_new.html" beforeDir="false" afterPath="$PROJECT_DIR$/Code/templates/subject_new.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/templates/subject_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/Code/templates/subject_update.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -101,6 +104,9 @@
       <workItem from="1569408831762" duration="748000" />
       <workItem from="1569464083477" duration="1037000" />
       <workItem from="1569544111109" duration="3154000" />
+      <workItem from="1569547877066" duration="667000" />
+      <workItem from="1569569345941" duration="1345000" />
+      <workItem from="1570589590950" duration="1396000" />
     </task>
     <task id="LOCAL-00001" summary="Update workspace.xml">
       <created>1569288410813</created>
